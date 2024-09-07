@@ -1,0 +1,16 @@
+volumes:
+  laravel-crud-data:
+    name: laravel-crud-data
+
+services:
+  laravel-crud-db:
+    container_name: laravel-crud-db
+    build:
+      context: .
+      dockerfile: dockerfile
+    image: laravel-crud-postgres-db
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - "laravel-crud-data:/var/lib/postgresql/data"

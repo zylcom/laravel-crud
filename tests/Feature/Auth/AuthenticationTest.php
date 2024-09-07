@@ -3,6 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -44,6 +45,9 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_logout(): void
     {
+        /**
+         * @var Authenticatable $user
+         */
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post('/logout');
