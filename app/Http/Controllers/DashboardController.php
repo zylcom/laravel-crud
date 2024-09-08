@@ -13,7 +13,7 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $products = Product::all();
+        $products = Product::whereBelongsTo($request->user())->where('stock', '<=', '30')->get();
 
         return Inertia::render('Dashboard', [
             'products' => $products,
