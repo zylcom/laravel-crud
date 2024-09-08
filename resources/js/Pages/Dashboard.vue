@@ -1,8 +1,21 @@
 <script setup lang="ts">
+import ActionDropdown from "@/Components/ActionDropdown.vue";
+import Table from "@/Components/Table.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 defineProps<{ products: any }>();
+
+const dropdownIndex = ref<number | null>(null);
+
+function openDropdown(id: number) {
+    if (dropdownIndex.value === id) {
+        dropdownIndex.value = null;
+    } else {
+        dropdownIndex.value = id;
+    }
+}
 </script>
 
 <template>
@@ -20,14 +33,19 @@ defineProps<{ products: any }>();
                 <div
                     class="bg-white relative overflow-x-auto shadow-sm sm:rounded-lg p-6"
                 >
-                    <h2>Low Stock Products</h2>
+                    <h2 class="text-3xl mb-6 font-semibold text-black">
+                        Low Stock Products
+                    </h2>
 
-                    <table
-                        class="w-full text-sm text-left rtl:text-right text-gray-500"
-                    >
-                        <thead
-                            class="text-xs text-gray-700 uppercase bg-gray-50"
+                    <p v-if="products.length === 0">
+                        Nothing to show, all products are in stock.
+                        <Link class="underline" href="/dashboard/products"
+                            >See all products</Link
                         >
+                    </p>
+
+                    <Table v-else>
+                        <template #tableHead>
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     Product name
@@ -36,16 +54,17 @@ defineProps<{ products: any }>();
                                 <th scope="col" class="px-6 py-3">Price</th>
                                 <th scope="col" class="px-6 py-3">Stock</th>
                                 <th scope="col" class="px-6 py-3">Status</th>
-                                <th scope="col" class="px-6 py-3">
-                                    Description
+                                <th scope="col" class="px-6 py-3 text-center">
+                                    Action
                                 </th>
                             </tr>
-                        </thead>
-                        <tbody>
+                        </template>
+
+                        <template #tableBody>
                             <tr
-                                class="border-b"
+                                class="border-b relative"
                                 :class="
-                                    product.stock < 30
+                                    product.stock < 10
                                         ? 'bg-red-100'
                                         : 'bg-white'
                                 "
@@ -64,11 +83,16 @@ defineProps<{ products: any }>();
                                 </td>
                                 <td class="px-6 py-4">{{ product.status }}</td>
                                 <td class="px-6 py-4">
-                                    {{ product.description }}
+                                    <ActionDropdown
+                                        :productId="product.id"
+                                        :isOpen="dropdownIndex === product.id"
+                                        :productStatus="product.status"
+                                        @open="openDropdown"
+                                    />
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
+                        </template>
+                    </Table>
                 </div>
             </div>
         </div>
