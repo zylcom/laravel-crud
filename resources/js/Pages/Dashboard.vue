@@ -35,6 +35,7 @@ defineProps<{ products: any }>();
                                 <th scope="col" class="px-6 py-3">Category</th>
                                 <th scope="col" class="px-6 py-3">Price</th>
                                 <th scope="col" class="px-6 py-3">Stock</th>
+                                <th scope="col" class="px-6 py-3">Status</th>
                                 <th scope="col" class="px-6 py-3">
                                     Description
                                 </th>
@@ -61,6 +62,7 @@ defineProps<{ products: any }>();
                                 <td class="px-6 py-4">
                                     {{ product.stock }}
                                 </td>
+                                <td class="px-6 py-4">{{ product.status }}</td>
                                 <td class="px-6 py-4">
                                     {{ product.description }}
                                 </td>

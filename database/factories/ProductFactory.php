@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,10 +21,18 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->sentence(),
             'price' => fake()->numberBetween(100, 1000),
-            'stock' => fake()->numberBetween(1, 100),
+            'stock' => fake()->randomNumber(2),
+            'status' => 'unavailable',
             'description' => fake()->text(),
             'category' => fake()->word(),
             'user_id' => User::factory(),
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterMaking(function (Product $product) {
+            $product->status = $product->stock === 0 ? 'unavailable' : 'available';
+        });
     }
 }

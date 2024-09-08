@@ -14,11 +14,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::factory()->count(10)->create();
+        Product::factory()->count(20)->recycle(User::factory()->count(5)->create())->create();
 
-        User::factory()->hasProducts(10)->create([
+        $user = User::factory()->hasProducts(4)->unverified()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+        ]);
+
+        $user->products()->create([
+            'name' => 'Test Product',
+            'description' => 'Test Description',
+            'price' => 10000,
+            'stock' => 0,
+            'status' => 'unavailable',
+            'category' => 'test',
         ]);
     }
 }
