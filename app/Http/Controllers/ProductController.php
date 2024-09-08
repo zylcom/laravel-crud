@@ -4,17 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $products = Product::whereBelongsTo($request->user())->get();
 
-        return 'Products list';
+        return Inertia::render('Product', ['products' => $products]);
     }
 
     /**
