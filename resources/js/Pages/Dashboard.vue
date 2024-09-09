@@ -23,54 +23,33 @@ function openDropdown(id: number) {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
-            </h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div
-                    class="bg-white relative overflow-x-auto shadow-sm sm:rounded-lg p-6"
-                >
-                    <h2 class="text-3xl mb-6 font-semibold text-black">
-                        Low Stock Products
-                    </h2>
+                <div class="bg-white relative overflow-x-auto shadow-sm sm:rounded-lg p-6">
+                    <h2 class="text-3xl mb-6 font-semibold text-black">Low Stock Products</h2>
 
                     <p v-if="products.length === 0">
                         Nothing to show, all products are in stock.
-                        <Link class="underline" href="/dashboard/products"
-                            >See all products</Link
-                        >
+                        <Link class="underline" href="/dashboard/products">See all products</Link>
                     </p>
 
                     <Table v-else>
                         <template #tableHead>
                             <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    Product name
-                                </th>
+                                <th scope="col" class="px-6 py-3">Product name</th>
                                 <th scope="col" class="px-6 py-3">Category</th>
                                 <th scope="col" class="px-6 py-3">Price</th>
                                 <th scope="col" class="px-6 py-3">Stock</th>
                                 <th scope="col" class="px-6 py-3">Status</th>
-                                <th scope="col" class="px-6 py-3 text-center">
-                                    Action
-                                </th>
+                                <th scope="col" class="px-6 py-3 text-center">Action</th>
                             </tr>
                         </template>
 
                         <template #tableBody>
-                            <tr
-                                class="border-b relative"
-                                :class="
-                                    product.stock < 10
-                                        ? 'bg-red-100'
-                                        : 'bg-white'
-                                "
-                                v-for="product in products"
-                                :key="product.id"
-                            >
+                            <tr class="border-b relative" :class="product.stock < 10 ? 'bg-red-100' : 'bg-white'" v-for="product in products" :key="product.id">
                                 <th scope="row" class="px-6 py-4 font-medium">
                                     {{ product.name }}
                                 </th>

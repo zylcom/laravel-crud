@@ -55,11 +55,7 @@ onUnmounted(() => {
             leave-from-class="opacity-100"
             leave-to-class="opacity-0"
         >
-            <div
-                v-if="show"
-                class="fixed inset-0 overflow-y-auto z-50 bg-white/10 backdrop-blur-sm flex items-center justify-center py-4"
-                scroll-region
-            >
+            <div v-if="show" class="fixed inset-0 overflow-y-auto z-50 bg-white/10 backdrop-blur-sm flex items-center justify-center py-4" scroll-region>
                 <div class="absolute inset-0" @click="close" />
 
                 <Transition
@@ -72,9 +68,9 @@ onUnmounted(() => {
                 >
                     <div
                         v-if="show"
-                        class="relative p-6 shadow-md bg-white border max-h-full rounded-lg h-auto overflow-auto transition-all w-fit mx-auto"
+                        class="relative p-6 shadow-md bg-white border max-h-full rounded-lg h-auto overflow-auto transition-all w-full max-w-screen-sm mx-auto"
                     >
-                        <slot v-if="show" />
+                        <slot />
                     </div>
                 </Transition>
             </div>

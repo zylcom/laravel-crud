@@ -7,12 +7,7 @@ defineProps<{
 
 <template>
     <!-- Dropdown trigger button -->
-    <button
-        class="p-2 rounded-lg hover:bg-gray-100 mx-auto block"
-        type="button"
-        title="Action menu"
-        @click="onClickHandler"
-    >
+    <button class="p-2 rounded-lg hover:bg-gray-100 mx-auto block" type="button" title="Action menu" @click="onClickHandler">
         <slot name="trigger" />
     </button>
 
@@ -25,10 +20,7 @@ defineProps<{
         leave-active-class="transition-all duration-300 ease-out"
         leave-to-class="scale-0 opacity-0"
     >
-        <div
-            class="p-1 absolute top-1/2 -translate-y-1/2 right-24 z-10 bg-white rounded-lg border shadow"
-            v-show="isOpen"
-        >
+        <div class="p-1 absolute top-1/2 -translate-y-1/2 right-24 z-10 bg-white rounded-lg border shadow" v-show="isOpen">
             <slot name="menu" />
         </div>
     </Transition>
