@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::whereBelongsTo($request->user())->orderBy('created_at')->get();
+        $products = Product::whereBelongsTo($request->user())->orderBy('id','asc')->get();
         $categories = $products->groupBy('category')->keys();
 
         return Inertia::render('Product/Index', ['products' => $products, 'categories' => $categories]);

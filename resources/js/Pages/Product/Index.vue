@@ -65,24 +65,12 @@ function closeModal() {
                                     v-for="product in products"
                                     :key="product.id"
                                 >
-                                    <th scope="row" class="px-6 py-4 font-medium">
-                                        {{ product.name }}
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        {{ product.category }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ product.price }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ product.stock }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ product.status }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ product.description }}
-                                    </td>
+                                    <th scope="row" class="px-6 py-4 font-medium">{{ product.name }}</th>
+                                    <td class="px-6 py-4">{{ product.category }}</td>
+                                    <td class="px-6 py-4">{{ product.price }}</td>
+                                    <td class="px-6 py-4">{{ product.stock }}</td>
+                                    <td class="px-6 py-4">{{ product.status }}</td>
+                                    <td class="px-6 py-4">{{ product.description }}</td>
                                     <td class="px-6 py-4">
                                         <ActionDropdown
                                             :isOpen="dropdownIndex === product.id"

@@ -21,12 +21,13 @@ const form = useForm({
     category: product.value?.category || "",
     stock: product.value?.stock || 0,
     description: product.value?.description || "",
-    status: product.value?.status || "",
+    status: product.value?.status || "unavailable",
 });
 
 function updateProduct() {
     form.patch(route("products.update", product.value.id), {
         onSuccess: () => {
+            form.defaults({ ...form.data(), ...product.value });
             emit("close");
         },
     });
