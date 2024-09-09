@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { computed, watch } from "vue";
 import { useForm } from "@inertiajs/vue3";
-//import InputError from "@/Components/InputError.vue";
+import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import Modal from "@/Components/Modal.vue";
 import NumberInput from "@/Components/NumberInput.vue";
 import RadioInput from "@/Components/RadioInput.vue";
+import { RefreshCwIcon } from "lucide-vue-next";
 
 const props = defineProps<{ product: any; show: boolean; categories: Record<string, string> }>();
-
-defineEmits(["close"]);
+const emit = defineEmits(["close"]);
 
 const product = computed(() => props.product);
 const show = computed(() => props.show);
@@ -25,7 +25,11 @@ const form = useForm({
 });
 
 function updateProduct() {
-    console.log(form);
+    form.patch(route("products.update", product.value.id), {
+        onSuccess: () => {
+            emit("close");
+        },
+    });
 }
 
 watch(show, (newValue) => {
@@ -42,7 +46,9 @@ watch(show, (newValue) => {
                 <div>
                     <InputLabel for="name" value="Name" />
 
-                    <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Product name" required autofocus />
+                    <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Product name" autofocus required />
+
+                    <InputError :message="form.errors.name" class="mt-2" />
                 </div>
 
                 <div>
@@ -57,6 +63,8 @@ watch(show, (newValue) => {
                         min="1"
                         required
                     />
+
+                    <InputError :message="form.errors.price" class="mt-2" />
                 </div>
 
                 <div>
@@ -91,14 +99,14 @@ watch(show, (newValue) => {
                 <div>
                     <InputLabel for="description" value="Description" />
 
-                    <TextInput id="description" type="text" class="mt-1 block w-full" v-model="form.description" placeholder="Product description" required />
+                    <TextInput id="description" type="text" class="mt-1 block w-full" v-model="form.description" placeholder="Product description" />
                 </div>
 
                 <div>
                     <InputLabel value="Status" />
 
-                    <div class="border border-gray-300 rounded-md shadow-sm p-2">
-                        <div class="flex items-center mb-4">
+                    <div class="border border-gray-300 rounded-md shadow-sm p-2 flex items-center gap-8">
+                        <div class="flex items-center">
                             <RadioInput id="available" value="available" name="product-status" v-model="form.status" :checked="form.status === 'available'" />
                             <InputLabel for="available" value="Available" class="ms-2 cursor-pointer" />
                         </div>
@@ -127,8 +135,11 @@ watch(show, (newValue) => {
 
                     <button
                         type="submit"
-                        class="grow text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
+                        class="grow text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm justify-center items-center px-5 py-2.5 me-2 mb-2 focus:outline-none flex gap-2"
+                        :disabled="form.processing"
                     >
+                        <RefreshCwIcon class="h-5 w-5 animate-spin" v-show="form.processing" />
+
                         Save
                     </button>
                 </div>

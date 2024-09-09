@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -13,7 +15,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::whereBelongsTo($request->user())->get();
+        $products = Product::whereBelongsTo($request->user())->orderBy('created_at')->get();
         $categories = $products->groupBy('category')->keys();
 
         return Inertia::render('Product/Index', ['products' => $products, 'categories' => $categories]);
@@ -54,9 +56,17 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductUpdateRequest $request, string $id)
     {
-        //
+        $product = Product::where('user_id', $request->user()->id)->where('id', $id)->first();
+
+        if (! $product) {
+            abort(404);
+        }
+
+        $product->update($request->validated());
+
+        return Redirect::route('products.index');
     }
 
     /**

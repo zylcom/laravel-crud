@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->integer('price');
-            $table->integer('stock');
-            $table->string('description');
+            $table->double('price');
+            $table->double('stock');
+            $table->string('description')->nullable();
             $table->string('category');
             $table->enum('status', ['available', 'unavailable'])->default('unavailable');
             $table->unsignedBigInteger('user_id');

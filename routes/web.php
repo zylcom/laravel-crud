@@ -22,6 +22,10 @@ Route::middleware('auth')->prefix('/dashboard')->group(function () {
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 });
 
+Route::middleware('auth')->prefix('/products')->group(function () {
+    Route::patch('/{id}', [ProductController::class, 'update'])->name('products.update');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

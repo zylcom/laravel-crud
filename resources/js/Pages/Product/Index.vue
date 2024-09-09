@@ -60,7 +60,7 @@ function closeModal() {
 
                             <template #tableBody>
                                 <tr
-                                    class="border-b relative"
+                                    class="border-b border-b-gray-400 relative"
                                     :class="product.stock < 10 ? 'bg-red-100' : 'bg-white'"
                                     v-for="product in products"
                                     :key="product.id"
