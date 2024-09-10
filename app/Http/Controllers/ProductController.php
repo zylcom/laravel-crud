@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductUpdateRequest;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -15,8 +16,10 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::whereBelongsTo($request->user())->orderBy('id','asc')->get();
-        $categories = $products->groupBy('category')->keys();
+        $products = Product::with('category')->whereBelongsTo($request->user())->orderBy('id', 'asc')->get();
+        $categories = Category::all();
+
+        /*dd($categories);*/
 
         return Inertia::render('Product/Index', ['products' => $products, 'categories' => $categories]);
     }
@@ -63,6 +66,8 @@ class ProductController extends Controller
         if (! $product) {
             abort(404);
         }
+
+        /*dd($request->validated());*/
 
         $product->update($request->validated());
 

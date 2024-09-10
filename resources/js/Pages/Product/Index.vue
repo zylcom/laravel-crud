@@ -9,7 +9,7 @@ import UpdateProductForm from "./Partials/UpdateProductForm.vue";
 
 defineProps<{
     products: any;
-    categories: Record<string, string>;
+    categories: any;
 }>();
 
 const dropdownIndex = ref<number | null>(null);
@@ -48,6 +48,7 @@ function closeModal() {
                         <Table>
                             <template #tableHead>
                                 <tr>
+                                    <th scope="col" class="px-6 py-3">ID</th>
                                     <th scope="col" class="px-6 py-3">Product name</th>
                                     <th scope="col" class="px-6 py-3">Category</th>
                                     <th scope="col" class="px-6 py-3">Price</th>
@@ -65,8 +66,9 @@ function closeModal() {
                                     v-for="product in products"
                                     :key="product.id"
                                 >
+                                    <td class="px-6 py-4">{{ product.id }}</td>
                                     <th scope="row" class="px-6 py-4 font-medium">{{ product.name }}</th>
-                                    <td class="px-6 py-4">{{ product.category }}</td>
+                                    <td class="px-6 py-4">{{ product.category.name }}</td>
                                     <td class="px-6 py-4">{{ product.price }}</td>
                                     <td class="px-6 py-4">{{ product.stock }}</td>
                                     <td class="px-6 py-4">{{ product.status }}</td>

@@ -28,7 +28,7 @@ class ProductUpdateRequest extends FormRequest
             'description' => ['string', 'nullable'],
             'stock' => ['required', 'integer', 'min:0'],
             'status' => ['required', 'string'],
-            'category' => ['required', 'string'],
+            'category_id' => ['required', 'integer', 'exists:categories,id'],
         ];
     }
 }

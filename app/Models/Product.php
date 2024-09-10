@@ -11,11 +11,21 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'description', 'price', 'stock', 'category', 'status',
+        'name', 'description', 'price', 'stock', 'category_id', 'status',
     ];
+
+    /*public function productable()*/
+    /*{*/
+    /*    return $this->morphTo(User::class);*/
+    /*}*/
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 }

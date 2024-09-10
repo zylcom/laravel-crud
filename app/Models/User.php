@@ -50,4 +50,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Product::class);
     }
+
+    /*public function productable()*/
+    /*{*/
+    /*    return $$this->morphMany(Product::class, 'productable');*/
+    /*}*/
 }

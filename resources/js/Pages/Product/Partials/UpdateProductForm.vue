@@ -9,24 +9,29 @@ import NumberInput from "@/Components/NumberInput.vue";
 import RadioInput from "@/Components/RadioInput.vue";
 import { RefreshCwIcon } from "lucide-vue-next";
 
-const props = defineProps<{ product: any; show: boolean; categories: Record<string, string> }>();
+const props = defineProps<{ product: any; show: boolean; categories: any }>();
 const emit = defineEmits(["close"]);
 
 const product = computed(() => props.product);
 const show = computed(() => props.show);
 
 const form = useForm({
-    name: product.value?.name || "",
-    price: product.value?.price || 1,
-    category: product.value?.category || "",
-    stock: product.value?.stock || 0,
-    description: product.value?.description || "",
-    status: product.value?.status || "unavailable",
+    name: product.value.name,
+    price: product.value.price,
+    category_id: product.value.category.id,
+    stock: product.value.stock,
+    description: product.value.description,
+    status: product.value.status,
 });
 
 function updateProduct() {
     form.patch(route("products.update", product.value.id), {
+        onError: () => {
+            console.log(product.value);
+            console.log(form);
+        },
         onSuccess: () => {
+            console.log(product.value);
             form.defaults({ ...form.data(), ...product.value });
             emit("close");
         },
@@ -73,14 +78,16 @@ watch(show, (newValue) => {
 
                     <select
                         id="category"
-                        v-model="form.category"
+                        v-model="form.category_id"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required
                     >
-                        <option selected value="">Choose a category</option>
+                        <option selected disabled value="" class="text-gray-500">Choose a category</option>
 
-                        <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
+                        <option v-for="category in categories" :key="category" :value="category.id">{{ category.name }}</option>
                     </select>
+
+                    <InputError :message="form.errors.category_id" class="mt-2" />
                 </div>
 
                 <div>
@@ -95,12 +102,16 @@ watch(show, (newValue) => {
                         placeholder="Product stock e.g. 1000"
                         required
                     />
+
+                    <InputError :message="form.errors.stock" class="mt-2" />
                 </div>
 
                 <div>
                     <InputLabel for="description" value="Description" />
 
                     <TextInput id="description" type="text" class="mt-1 block w-full" v-model="form.description" placeholder="Product description" />
+
+                    <InputError :message="form.errors.description" class="mt-2" />
                 </div>
 
                 <div>
@@ -123,6 +134,8 @@ watch(show, (newValue) => {
                             <InputLabel for="unavailable" value="Unavailable" class="ms-2 cursor-pointer" />
                         </div>
                     </div>
+
+                    <InputError :message="form.errors.status" class="mt-2" />
                 </div>
 
                 <div class="flex gap-x-2">

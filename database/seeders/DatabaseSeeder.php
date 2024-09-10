@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -14,9 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::factory()->count(20)->recycle(User::factory()->count(5)->create())->create();
+        Product::factory()->count(20)
+            ->recycle(Category::factory()->count(5)->create())
+            ->recycle(User::factory()->count(5)->create())
+            ->create();
 
-        $user = User::factory()->hasProducts(4)->unverified()->create([
+        $user = User::factory()->hasProducts(4, ['category_id' => fake()->numberBetween(1, 5)])->unverified()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
@@ -27,7 +31,8 @@ class DatabaseSeeder extends Seeder
             'price' => 10000,
             'stock' => 0,
             'status' => 'unavailable',
-            'category' => 'test',
+            /*'category' => 'test',*/
+            'category_id' => fake()->numberBetween(1, 5),
         ]);
     }
 }
