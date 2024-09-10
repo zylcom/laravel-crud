@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { Head } from "@inertiajs/vue3";
+import { Head, Link, usePage } from "@inertiajs/vue3";
 import ActionDropdown from "@/Components/ActionDropdown.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Table from "@/Components/Table.vue";
 import { ref } from "vue";
+import Alert from "@/Components/Alert.vue";
 
 defineProps<{
     products: any;
@@ -28,7 +29,18 @@ function changeSelectedIndex(id: number) {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white relative shadow-sm sm:rounded-lg p-6">
-                    <h2 class="text-3xl mb-6 font-semibold text-black">All Products</h2>
+                    <div class="flex justify-between mb-6 items-center">
+                        <h2 class="text-3xl font-semibold text-black">All Products</h2>
+
+                        <Link
+                            type="button"
+                            class="text-blue-700 rounded-full hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-5 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                            href="/dashboard/products/create"
+                            >Create new product</Link
+                        >
+                    </div>
+
+                    <Alert />
 
                     <p v-if="products.length === 0">Nothing to show.</p>
 

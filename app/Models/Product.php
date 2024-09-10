@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\ProductStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,10 +15,12 @@ class Product extends Model
         'name', 'description', 'price', 'stock', 'category_id', 'status',
     ];
 
-    /*public function productable()*/
-    /*{*/
-    /*    return $this->morphTo(User::class);*/
-    /*}*/
+    protected function casts()
+    {
+        return [
+            'status' => ProductStatus::class,
+        ];
+    }
 
     public function user(): BelongsTo
     {

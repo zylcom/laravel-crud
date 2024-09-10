@@ -20,11 +20,13 @@ Route::middleware('auth')->prefix('/dashboard')->group(function () {
     Route::get('/', DashboardController::class)->name('dashboard');
 
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 });
 
 Route::middleware('auth')->prefix('/products')->group(function () {
     Route::patch('/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::post('/', [ProductController::class, 'store'])->name('products.store');
 });
 
 Route::middleware('auth')->group(function () {

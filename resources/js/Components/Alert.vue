@@ -5,7 +5,7 @@ import { computed, ref, watch } from "vue";
 
 const page = usePage();
 const flash = computed(() => page.props.flash);
-const show = ref(false);
+const show = ref(flash.value.message ? true : false);
 
 watch(flash, (newValue) => {
     if (newValue) {

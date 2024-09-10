@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductCreateRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-/*use Illuminate\Support\Facades\Redirect;*/
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -29,15 +30,21 @@ class ProductController extends Controller
      */
     public function create(Request $request)
     {
-        //
+        $categories = Category::all();
+
+        return Inertia::render('Product/Create', ['categories' => $categories]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductCreateRequest $request)
     {
-        //
+
+        $product = $request->validated();
+        $request->user()->products()->create($product);
+
+        return Redirect::route('products.index')->with('message', 'Product created successfully.')->with('timestamps', now());
     }
 
     /**
@@ -69,7 +76,7 @@ class ProductController extends Controller
 
         $product->update($request->validated());
 
-        /*return Redirect::route('products.index');*/
+        return back()->with('message', 'Product updated successfully.')->with('timestamps', now());
     }
 
     /**
