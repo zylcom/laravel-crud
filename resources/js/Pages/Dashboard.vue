@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import ActionDropdown from "@/Components/ActionDropdown.vue";
-import Table from "@/Components/Table.vue";
+import Alert from "@/Components/Alert.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link } from "@inertiajs/vue3";
-import { CircleCheckBigIcon, CircleXIcon, EllipsisIcon, PencilIcon, Trash2Icon } from "lucide-vue-next";
-import { ref } from "vue";
+import Table from "@/Components/Table.vue";
 import UpdateProductForm from "./Product/Partials/UpdateProductForm.vue";
+import { CircleCheckBigIcon, CircleXIcon, EllipsisIcon, PencilIcon, Trash2Icon } from "lucide-vue-next";
+import { Head, Link } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 defineProps<{ products: any; categories: any }>();
 
@@ -44,9 +45,10 @@ function closeModal() {
                         >
                     </div>
 
+                    <Alert />
+
                     <p v-if="products.length === 0">
                         Nothing to show, all products are in stock.
-                        <Link class="underline" href="/dashboard/products">See all products</Link>
                     </p>
 
                     <Table v-else>
@@ -105,12 +107,19 @@ function closeModal() {
                                                     </span>
                                                 </button>
 
-                                                <button class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-red-100" title="Delete product">
+                                                <Link
+                                                    :href="route('products.destroy', product.id)"
+                                                    as="button"
+                                                    method="delete"
+                                                    type="button"
+                                                    title="Delete product"
+                                                    class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-red-100"
+                                                >
                                                     <span>
                                                         <Trash2Icon class="w-4 h-4" />
                                                         Delete
                                                     </span>
-                                                </button>
+                                                </Link>
 
                                                 <button
                                                     class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-gray-100"

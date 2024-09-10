@@ -24,6 +24,7 @@ Route::middleware('auth')->prefix('/dashboard')->group(function () {
 
 Route::middleware('auth')->prefix('/products')->group(function () {
     Route::patch('/{id}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
 });
 
 Route::middleware('auth')->group(function () {

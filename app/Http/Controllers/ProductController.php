@@ -75,8 +75,16 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        $product = Product::where('user_id', $request->user()->id)->where('id', $id)->first();
+
+        if (! $product) {
+            abort(404);
+        }
+
+        $product->delete();
+
+        return back()->with('message', 'Product deleted successfully.')->with('timestamps', now());
     }
 }
