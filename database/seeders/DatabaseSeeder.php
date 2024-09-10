@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             ->recycle(User::factory()->count(5)->create())
             ->create();
 
-        $user = User::factory()->hasProducts(4, ['category_id' => fake()->numberBetween(1, 5)])->unverified()->create([
+        $user = User::factory()->hasProducts(24)->unverified()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);

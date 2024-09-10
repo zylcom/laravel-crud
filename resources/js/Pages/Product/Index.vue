@@ -1,32 +1,13 @@
 <script setup lang="ts">
-import { CircleCheckBigIcon, CircleXIcon, EllipsisIcon, PencilIcon, Trash2Icon } from "lucide-vue-next";
 import { Head } from "@inertiajs/vue3";
-import { ref } from "vue";
 import ActionDropdown from "@/Components/ActionDropdown.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Table from "@/Components/Table.vue";
-import UpdateProductForm from "./Partials/UpdateProductForm.vue";
 
 defineProps<{
     products: any;
     categories: any;
 }>();
-
-const dropdownIndex = ref<number | null>(null);
-const showEditModal = ref<boolean>(false);
-
-function openDropdown(id: number) {
-    if (dropdownIndex.value === id) {
-        dropdownIndex.value = null;
-    } else {
-        dropdownIndex.value = id;
-    }
-}
-
-function closeModal() {
-    showEditModal.value = false;
-    dropdownIndex.value = null;
-}
 </script>
 
 <template>
@@ -74,65 +55,7 @@ function closeModal() {
                                     <td class="px-6 py-4">{{ product.status }}</td>
                                     <td class="px-6 py-4">{{ product.description }}</td>
                                     <td class="px-6 py-4">
-                                        <ActionDropdown
-                                            :isOpen="dropdownIndex === product.id"
-                                            :onClickHandler="
-                                                () => {
-                                                    openDropdown(product.id);
-                                                }
-                                            "
-                                        >
-                                            <template #trigger>
-                                                <EllipsisIcon class="w-5 h-5" />
-                                            </template>
-
-                                            <template #menu>
-                                                <div class="flex flex-col [&_button]:rounded divide-y">
-                                                    <button
-                                                        class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-gray-100"
-                                                        title="Edit product"
-                                                        @click="showEditModal = true"
-                                                    >
-                                                        <span>
-                                                            <PencilIcon class="w-4 h-4" />
-                                                            Edit
-                                                        </span>
-                                                    </button>
-
-                                                    <button
-                                                        class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-red-100"
-                                                        title="Delete product"
-                                                    >
-                                                        <span>
-                                                            <Trash2Icon class="w-4 h-4" />
-                                                            Delete
-                                                        </span>
-                                                    </button>
-
-                                                    <button
-                                                        class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-gray-100"
-                                                        :title="`${product.status === 'available' ? 'Disable' : 'Enable'} product`"
-                                                    >
-                                                        <span v-if="product.status === 'available'">
-                                                            <CircleXIcon class="w-4 h-4" />
-                                                            Disable
-                                                        </span>
-
-                                                        <span v-else>
-                                                            <CircleCheckBigIcon class="w-4 h-4" />
-                                                            Enable
-                                                        </span>
-                                                    </button>
-                                                </div>
-                                            </template>
-                                        </ActionDropdown>
-
-                                        <UpdateProductForm
-                                            :categories="categories"
-                                            :show="showEditModal && product.id === dropdownIndex"
-                                            :product="product"
-                                            @close="closeModal"
-                                        />
+                                        <ActionDropdown :product="product" :categories="categories" />
                                     </td>
                                 </tr>
                             </template>
