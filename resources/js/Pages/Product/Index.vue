@@ -3,11 +3,18 @@ import { Head } from "@inertiajs/vue3";
 import ActionDropdown from "@/Components/ActionDropdown.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Table from "@/Components/Table.vue";
+import { ref } from "vue";
 
 defineProps<{
     products: any;
     categories: any;
 }>();
+
+const selectedIndex = ref<number | null>(null);
+
+function changeSelectedIndex(id: number) {
+    selectedIndex.value === id ? (selectedIndex.value = null) : (selectedIndex.value = id);
+}
 </script>
 
 <template>
@@ -55,7 +62,12 @@ defineProps<{
                                     <td class="px-6 py-4">{{ product.status }}</td>
                                     <td class="px-6 py-4">{{ product.description }}</td>
                                     <td class="px-6 py-4">
-                                        <ActionDropdown :product="product" :categories="categories" />
+                                        <ActionDropdown
+                                            :product="product"
+                                            :categories="categories"
+                                            :dropdownIndex="selectedIndex"
+                                            @toggle="changeSelectedIndex"
+                                        />
                                     </td>
                                 </tr>
                             </template>

@@ -1,29 +1,28 @@
 <script setup lang="ts">
 import { CircleCheckBigIcon, CircleXIcon, EllipsisIcon, PencilIcon, Trash2Icon } from "lucide-vue-next";
 import { Link } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import UpdateProductForm from "@/Pages/Product/Partials/UpdateProductForm.vue";
 
-defineProps<{
+const emit = defineEmits(["toggle"]);
+const props = defineProps<{
     product: any;
     categories: any;
+    dropdownIndex: number | null;
 }>();
 
-const dropdownIndex = ref<number | null>(null);
 const showEditModal = ref<boolean>(false);
-
-function openDropdown(id: number) {
-    dropdownIndex.value === id ? (dropdownIndex.value = null) : (dropdownIndex.value = id);
-}
+const product = computed(() => props.product);
 
 function closeModal() {
     showEditModal.value = false;
-    dropdownIndex.value = null;
+
+    emit("toggle", product.value.id);
 }
 </script>
 
 <template>
-    <button class="p-2 rounded-lg hover:bg-gray-100 mx-auto block" type="button" title="Action menu" @click="() => openDropdown(product.id)">
+    <button class="p-2 rounded-lg hover:bg-gray-100 mx-auto block" type="button" title="Action menu" @click="$emit('toggle', product.id)">
         <EllipsisIcon class="w-5 h-5" />
     </button>
 

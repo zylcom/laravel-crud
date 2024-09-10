@@ -4,8 +4,15 @@ import Alert from "@/Components/Alert.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Table from "@/Components/Table.vue";
 import { Head, Link } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 defineProps<{ products: any; categories: any }>();
+
+const selectedIndex = ref<number | null>(null);
+
+function changeSelectedIndex(id: number) {
+    selectedIndex.value === id ? (selectedIndex.value = null) : (selectedIndex.value = id);
+}
 </script>
 
 <template>
@@ -53,19 +60,13 @@ defineProps<{ products: any; categories: any }>();
                                 v-for="product in products"
                                 :key="product.id"
                             >
-                                <th scope="row" class="px-6 py-4 font-medium">
-                                    {{ product.name }}
-                                </th>
-                                <td class="px-6 py-4">
-                                    {{ product.category.name }}
-                                </td>
+                                <th scope="row" class="px-6 py-4 font-medium">{{ product.name }}</th>
+                                <td class="px-6 py-4">{{ product.category.name }}</td>
                                 <td class="px-6 py-4">{{ product.price }}</td>
-                                <td class="px-6 py-4">
-                                    {{ product.stock }}
-                                </td>
+                                <td class="px-6 py-4">{{ product.stock }}</td>
                                 <td class="px-6 py-4">{{ product.status }}</td>
                                 <td class="px-6 py-4">
-                                    <ActionDropdown :product="product" :categories="categories" />
+                                    <ActionDropdown :product="product" :categories="categories" :dropdownIndex="selectedIndex" @toggle="changeSelectedIndex" />
                                 </td>
                             </tr>
                         </template>
