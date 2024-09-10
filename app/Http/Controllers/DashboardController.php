@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,10 +14,12 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $products = Product::whereBelongsTo($request->user())->where('stock', '<=', '30')->get();
+        $products = Product::with('category')->whereBelongsTo($request->user())->where('stock', '<=', '30')->orderBy('stock', 'asc')->get();
+        $categories = Category::all();
 
         return Inertia::render('Dashboard', [
             'products' => $products,
+            'categories' => $categories,
         ]);
     }
 }

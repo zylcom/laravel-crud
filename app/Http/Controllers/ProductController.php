@@ -6,7 +6,7 @@ use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+/*use Illuminate\Support\Facades\Redirect;*/
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -67,11 +67,9 @@ class ProductController extends Controller
             abort(404);
         }
 
-        /*dd($request->validated());*/
-
         $product->update($request->validated());
 
-        return Redirect::route('products.index');
+        /*return Redirect::route('products.index');*/
     }
 
     /**
