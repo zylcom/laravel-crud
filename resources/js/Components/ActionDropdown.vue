@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { CircleCheckBigIcon, CircleXIcon, EllipsisIcon, PencilIcon, Trash2Icon } from "lucide-vue-next";
-import { Link } from "@inertiajs/vue3";
+import { /*CircleCheckBigIcon, CircleXIcon,*/ EllipsisIcon, ExternalLink, PencilIcon, Trash2Icon } from "lucide-vue-next";
+import { Link, router } from "@inertiajs/vue3";
 import { computed, ref } from "vue";
 import UpdateProductForm from "@/Pages/Product/Partials/UpdateProductForm.vue";
 
@@ -13,6 +13,15 @@ const props = defineProps<{
 
 const showEditModal = ref<boolean>(false);
 const product = computed(() => props.product);
+const disabled = ref<boolean>(false);
+
+router.on("start", () => {
+    disabled.value = true;
+});
+
+router.on("finish", () => {
+    disabled.value = false;
+});
 
 function closeModal() {
     showEditModal.value = false;
@@ -36,7 +45,23 @@ function closeModal() {
     >
         <div class="p-1 absolute top-1/2 -translate-y-1/2 right-24 z-10 bg-white rounded-lg border shadow" v-show="dropdownIndex === product.id">
             <div class="flex flex-col [&_button]:rounded divide-y">
-                <button class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-gray-100" title="Edit product" @click="showEditModal = true">
+                <Link
+                    :href="route('products.show', product.id)"
+                    type="button"
+                    title="View detail product"
+                    class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-gray-100"
+                >
+                    <span>
+                        <ExternalLink class="w-4 h-4" />
+                        Detail
+                    </span>
+                </Link>
+
+                <button
+                    class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-gray-100"
+                    title="Edit product"
+                    @click="showEditModal = true"
+                >
                     <span>
                         <PencilIcon class="w-4 h-4" />
                         Edit
@@ -50,6 +75,7 @@ function closeModal() {
                     type="button"
                     title="Delete product"
                     class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-red-100"
+                    :disabled="disabled"
                 >
                     <span>
                         <Trash2Icon class="w-4 h-4" />
@@ -57,9 +83,10 @@ function closeModal() {
                     </span>
                 </Link>
 
-                <button
+                <!-- <button
                     class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-gray-100"
                     :title="`${product.status === 'available' ? 'Disable' : 'Enable'} product`"
+                    :disabled="disabled"
                 >
                     <span v-if="product.status === 'available'">
                         <CircleXIcon class="w-4 h-4" />
@@ -70,7 +97,7 @@ function closeModal() {
                         <CircleCheckBigIcon class="w-4 h-4" />
                         Enable
                     </span>
-                </button>
+                </button> -->
             </div>
         </div>
     </Transition>

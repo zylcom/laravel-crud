@@ -50,9 +50,16 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
-        //
+        $product = Product::with('category')->where('user_id', $request->user()->id)->where('id', $id)->first();
+        $categories = Category::all();
+
+        if (! $product) {
+            abort(404);
+        }
+
+        return Inertia::render('Product/Detail', ['product' => $product, 'categories' => $categories]);
     }
 
     /**

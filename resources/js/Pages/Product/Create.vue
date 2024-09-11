@@ -45,7 +45,7 @@ function createProduct() {
         </template>
 
         <div class="min-h-screen bg-white overflow-y-auto border p-4 rounded-md shadow max-w-screen-md mx-4 md:mx-auto my-2">
-            <h2 class="text-xl font-semibold text-black mb-6">Create Product</h2>
+            <h2 class="text-3xl font-semibold text-black mb-6">Create Product</h2>
 
             <form class="space-y-6" @submit.prevent="createProduct">
                 <div>
