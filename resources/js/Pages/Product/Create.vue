@@ -40,12 +40,8 @@ function createProduct() {
     <Head title="Create Product" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Create Product</h2>
-        </template>
-
-        <div class="min-h-screen bg-white overflow-y-auto border p-4 rounded-md shadow max-w-screen-md mx-4 md:mx-auto my-2">
-            <h2 class="text-3xl font-semibold text-black mb-6">Create Product</h2>
+        <div class="p-6">
+            <h2 class="text-lg sm:text-3xl font-semibold text-black mb-6">Create New Product</h2>
 
             <form class="space-y-6" @submit.prevent="createProduct">
                 <div>
@@ -146,12 +142,12 @@ function createProduct() {
                 </div>
 
                 <div class="flex gap-x-2">
-                    <!--               <button
-                    type="button"
-                    class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                >
-                    Cancel
-</button>-->
+                    <!-- <button
+                        type="button"
+                        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                        >
+                            Cancel
+                        </button> -->
 
                     <button
                         type="submit"
