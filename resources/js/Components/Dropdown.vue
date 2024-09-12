@@ -60,7 +60,7 @@ onUnmounted(() => document.removeEventListener("keydown", closeOnEscape));
 
 <template>
     <div class="relative">
-        <button class="p-2 rounded-lg hover:bg-gray-100 mx-auto block" title="Open dropdown" role="button" type="button" @click="toggleDropdown">
+        <button class="mx-auto block rounded-lg p-2 hover:bg-gray-100" title="Open dropdown" role="button" type="button" @click="toggleDropdown">
             <span class="sr-only">Open dropdown</span>
 
             <slot name="trigger" />
@@ -76,12 +76,12 @@ onUnmounted(() => document.removeEventListener("keydown", closeOnEscape));
         >
             <div
                 v-show="show && selectedIndex === index"
-                class="bg-white absolute z-50 my-2 rounded-md shadow-lg whitespace-nowrap"
+                class="absolute z-50 my-2 whitespace-nowrap rounded-md bg-white shadow-lg"
                 :class="[alignmentClasses]"
                 style="display: none"
                 @click="hideDropdown"
             >
-                <div class="rounded-md ring-1 ring-black ring-opacity-5 p-1">
+                <div class="rounded-md p-1 ring-1 ring-black ring-opacity-5">
                     <slot name="content" />
                 </div>
             </div>

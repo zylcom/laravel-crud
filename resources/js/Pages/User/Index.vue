@@ -21,12 +21,12 @@ function changeSelectedIndex(id: number | string | null) {
     <Head title="Users" />
 
     <AuthenticatedLayout>
-        <div class="bg-white relative overflow-x-auto w-auto p-6">
-            <div class="flex justify-between mb-6 sm:items-center gap-2 flex-col sm:flex-row">
-                <h2 class="text-lg sm:text-3xl font-semibold text-black">All Users</h2>
+        <div class="relative w-auto overflow-x-auto bg-white p-6">
+            <div class="mb-6 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+                <h2 class="text-lg font-semibold text-black sm:text-3xl">All Users</h2>
 
                 <Link
-                    class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                    class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25"
                     type="button"
                     href="/users/create"
                     >Create new user</Link
@@ -44,15 +44,15 @@ function changeSelectedIndex(id: number | string | null) {
                             <th scope="col" class="px-6 py-3">Name</th>
                             <th scope="col" class="px-6 py-3">Email</th>
                             <th scope="col" class="px-6 py-3">Role</th>
-                            <th scope="col" class="hidden sm:table-cell px-6 py-3">Created At</th>
-                            <th scope="col" class="hidden sm:table-cell px-6 py-3">Updated At</th>
+                            <th scope="col" class="hidden px-6 py-3 sm:table-cell">Created At</th>
+                            <th scope="col" class="hidden px-6 py-3 sm:table-cell">Updated At</th>
                             <th scope="col" class="px-6 py-3 text-center">Action</th>
                         </tr>
                     </template>
 
                     <template #tableBody>
                         <tr
-                            class="border-b border-b-gray-400 relative"
+                            class="relative border-b border-b-gray-400"
                             :class="user.role === 'admin' ? 'bg-blue-100' : 'bg-white'"
                             v-for="user in users"
                             :key="user.id"
@@ -60,8 +60,8 @@ function changeSelectedIndex(id: number | string | null) {
                             <th scope="row" class="px-6 py-4 font-medium">{{ user.name }} {{ $page.props.auth.user.id === user.id ? "(You)" : "" }}</th>
                             <td class="px-6 py-4">{{ user.email }}</td>
                             <td class="px-6 py-4">{{ user.role }}</td>
-                            <td class="hidden sm:table-cell px-6 py-4">{{ user.created_at }}</td>
-                            <td class="hidden sm:table-cell px-6 py-4">{{ user.updated_at }}</td>
+                            <td class="hidden px-6 py-4 sm:table-cell">{{ user.created_at }}</td>
+                            <td class="hidden px-6 py-4 sm:table-cell">{{ user.updated_at }}</td>
                             <td class="px-6 py-4 text-center">
                                 <UserActionDropdown :user="user" :selectedIndex="selectedIndex" @changeSelectedIndex="changeSelectedIndex" />
                             </td>

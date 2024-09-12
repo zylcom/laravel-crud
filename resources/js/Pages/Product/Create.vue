@@ -41,7 +41,7 @@ function createProduct() {
 
     <AuthenticatedLayout>
         <div class="p-6">
-            <h2 class="text-lg sm:text-3xl font-semibold text-black mb-6">Create New Product</h2>
+            <h2 class="mb-6 text-lg font-semibold text-black sm:text-3xl">Create New Product</h2>
 
             <form class="space-y-6" @submit.prevent="createProduct">
                 <div>
@@ -74,7 +74,7 @@ function createProduct() {
                     <select
                         id="category"
                         v-model="form.category_id"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                         required
                     >
                         <option selected disabled value="" class="text-gray-500">Choose a category</option>
@@ -112,7 +112,7 @@ function createProduct() {
                 <div>
                     <InputLabel value="Status" />
 
-                    <div class="border border-gray-300 rounded-md shadow-sm p-2 flex sm:items-center gap-y-1 sm:gap-8 flex-col sm:flex-row">
+                    <div class="flex flex-col gap-y-1 rounded-md border border-gray-300 p-2 shadow-sm sm:flex-row sm:items-center sm:gap-8">
                         <div class="flex items-center">
                             <RadioInput
                                 id="available"
@@ -142,7 +142,7 @@ function createProduct() {
                 </div>
 
                 <PrimaryButton
-                    class="w-full text-center flex justify-center"
+                    class="flex w-full justify-center text-center"
                     type="submit"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"

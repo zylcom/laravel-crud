@@ -35,37 +35,37 @@ function changeSelectedIndex() {
 <template>
     <Dropdown align="right-center" :index="user.id" :selectedIndex="selectedIndex" @changeSelectedIndex="changeSelectedIndex">
         <template #trigger>
-            <EllipsisIcon class="w-5 h-5" />
+            <EllipsisIcon class="h-5 w-5" />
         </template>
 
         <template #content>
-            <div class="flex flex-col [&_button]:rounded divide-y">
+            <div class="flex flex-col divide-y [&_button]:rounded">
                 <Link
                     :href="route('users.show', user.id)"
                     type="button"
                     title="View detail user"
-                    class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-gray-100"
+                    class="p-1 hover:bg-gray-100 [&_span]:flex [&_span]:items-center [&_span]:gap-2"
                 >
                     <span>
-                        <ExternalLink class="w-4 h-4" />
+                        <ExternalLink class="h-4 w-4" />
                         Detail
                     </span>
                 </Link>
 
-                <button class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-gray-100" title="Edit user" @click="showEditModal = true">
+                <button class="p-1 hover:bg-gray-100 [&_span]:flex [&_span]:items-center [&_span]:gap-2" title="Edit user" @click="showEditModal = true">
                     <span>
-                        <PencilIcon class="w-4 h-4" />
+                        <PencilIcon class="h-4 w-4" />
                         Edit
                     </span>
                 </button>
 
                 <button
-                    class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-red-100"
+                    class="p-1 hover:bg-red-100 [&_span]:flex [&_span]:items-center [&_span]:gap-2"
                     title="Delete user"
                     @click="showDeleteConfirmationModal = true"
                 >
                     <span>
-                        <Trash2Icon class="w-4 h-4" />
+                        <Trash2Icon class="h-4 w-4" />
                         Delete
                     </span>
                 </button>

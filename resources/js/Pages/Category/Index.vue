@@ -21,12 +21,12 @@ function changeSelectedIndex(id: number | string | null) {
     <Head title="Categories" />
 
     <AuthenticatedLayout>
-        <div class="bg-white relative overflow-x-auto w-auto p-6">
-            <div class="flex justify-between mb-6 sm:items-center gap-2 flex-col sm:flex-row">
-                <h2 class="text-lg sm:text-3xl font-semibold text-black">All Categories</h2>
+        <div class="relative w-auto overflow-x-auto bg-white p-6">
+            <div class="mb-6 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+                <h2 class="text-lg font-semibold text-black sm:text-3xl">All Categories</h2>
 
                 <Link
-                    class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                    class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25"
                     type="button"
                     href="/categories/create"
                     >Create new category</Link
@@ -43,18 +43,18 @@ function changeSelectedIndex(id: number | string | null) {
                         <tr>
                             <th scope="col" class="px-6 py-3">ID</th>
                             <th scope="col" class="px-6 py-3">Name</th>
-                            <th scope="col" class="hidden sm:table-cell px-6 py-3">Created At</th>
-                            <th scope="col" class="hidden sm:table-cell px-6 py-3">Updated At</th>
+                            <th scope="col" class="hidden px-6 py-3 sm:table-cell">Created At</th>
+                            <th scope="col" class="hidden px-6 py-3 sm:table-cell">Updated At</th>
                             <th scope="col" class="px-6 py-3 text-center">Action</th>
                         </tr>
                     </template>
 
                     <template #tableBody>
-                        <tr class="border-b border-b-gray-400 relative" v-for="category in categories" :key="category.id">
+                        <tr class="relative border-b border-b-gray-400" v-for="category in categories" :key="category.id">
                             <td class="px-6 py-4">{{ category.id }}</td>
                             <td class="px-6 py-4">{{ category.name }}</td>
-                            <td class="hidden sm:table-cell px-6 py-4">{{ category.created_at }}</td>
-                            <td class="hidden sm:table-cell px-6 py-4">{{ category.updated_at }}</td>
+                            <td class="hidden px-6 py-4 sm:table-cell">{{ category.created_at }}</td>
+                            <td class="hidden px-6 py-4 sm:table-cell">{{ category.updated_at }}</td>
                             <td class="px-6 py-4 text-center">
                                 <CategoryActionDropdown :category="category" :selectedIndex="selectedIndex" @changeSelectedIndex="changeSelectedIndex" />
                             </td>

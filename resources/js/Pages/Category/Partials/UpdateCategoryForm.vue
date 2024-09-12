@@ -44,7 +44,7 @@ watch(show, (newValue) => {
 <template>
     <Modal :show="show" @close="$emit('close')">
         <div class="max-h-full overflow-y-auto p-1">
-            <h2 class="text-xl font-semibold text-black mb-6">Edit Category</h2>
+            <h2 class="mb-6 text-xl font-semibold text-black">Edit Category</h2>
 
             <form class="space-y-6" @submit.prevent="updateCategory">
                 <div>
@@ -55,7 +55,7 @@ watch(show, (newValue) => {
                     <InputError :message="form.errors.name" class="mt-2" />
                 </div>
 
-                <div class="flex gap-x-2 justify-end">
+                <div class="flex justify-end gap-x-2">
                     <SecondaryButton type="button" @click="$emit('close')">Cancel</SecondaryButton>
 
                     <PrimaryButton type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Save</PrimaryButton>

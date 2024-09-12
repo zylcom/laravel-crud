@@ -20,9 +20,9 @@ function changeSelectedIndex(id: number | string | null) {
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <div class="bg-white relative overflow-x-auto w-auto p-6">
+        <div class="relative w-auto overflow-x-auto bg-white p-6">
             <template v-if="$page.props.auth.user.role === 'admin'">
-                <h2 class="text-lg sm:text-3xl mb-6 font-semibold text-black">Users With Low Products</h2>
+                <h2 class="mb-6 text-lg font-semibold text-black sm:text-3xl">Users With Low Products</h2>
 
                 <Alert />
 
@@ -40,7 +40,7 @@ function changeSelectedIndex(id: number | string | null) {
 
                         <template #tableBody>
                             <tr
-                                class="border-b border-b-gray-400 relative"
+                                class="relative border-b border-b-gray-400"
                                 :class="user.role === 'admin' ? 'bg-blue-100' : 'bg-white'"
                                 v-for="user in users"
                                 :key="user.id"
@@ -58,7 +58,7 @@ function changeSelectedIndex(id: number | string | null) {
                 </div>
             </template>
 
-            <h2 class="text-lg mt-12 sm:text-3xl mb-6 font-semibold text-black">Low Stock Products</h2>
+            <h2 class="mb-6 mt-12 text-lg font-semibold text-black sm:text-3xl">Low Stock Products</h2>
 
             <p v-if="products.length === 0">Nothing to show, all products are in stock.</p>
 
@@ -67,7 +67,7 @@ function changeSelectedIndex(id: number | string | null) {
                     <template #tableHead>
                         <tr>
                             <th scope="col" class="px-6 py-3">Product name</th>
-                            <th scope="col" class="hidden md:table-cell px-6 py-3">Category</th>
+                            <th scope="col" class="hidden px-6 py-3 md:table-cell">Category</th>
                             <th scope="col" class="px-6 py-3">Price</th>
                             <th scope="col" class="px-6 py-3">Stock</th>
                             <th scope="col" class="px-6 py-3">Status</th>
@@ -77,13 +77,13 @@ function changeSelectedIndex(id: number | string | null) {
 
                     <template #tableBody>
                         <tr
-                            class="border-b border-b-gray-400 relative"
+                            class="relative border-b border-b-gray-400"
                             :class="product.stock < 10 ? 'bg-red-100' : 'bg-white'"
                             v-for="product in products"
                             :key="product.id"
                         >
                             <th scope="row" class="px-6 py-4 font-medium">{{ product.name }}</th>
-                            <td class="hidden md:table-cell px-6 py-4">{{ product.category.name }}</td>
+                            <td class="hidden px-6 py-4 md:table-cell">{{ product.category.name }}</td>
                             <td class="px-6 py-4">{{ product.price }}</td>
                             <td class="px-6 py-4">{{ product.stock }}</td>
                             <td class="px-6 py-4">{{ product.status }}</td>

@@ -23,8 +23,8 @@ function closeModal() {
 
     <AuthenticatedLayout>
         <div class="p-6">
-            <div class="flex justify-between items-center mb-6 border-b pb-3">
-                <h2 class="text-lg sm:text-3xl font-semibold text-black">Details</h2>
+            <div class="mb-6 flex items-center justify-between border-b pb-3">
+                <h2 class="text-lg font-semibold text-black sm:text-3xl">Details</h2>
 
                 <SecondaryButton @click="show = true">Edit</SecondaryButton>
             </div>
@@ -32,7 +32,7 @@ function closeModal() {
             <Alert />
 
             <div
-                class="[&_div]:flex [&_div]:gap-x-4 space-y-2 [&_div_span:first-of-type]:font-medium [&_div_span:first-of-type]:basis-2/4 [&_div_span:last-of-type]:basis-2/4 md:[&_div_span:first-of-type]:basis-1/4 md:[&_div_span:last-of-type]:basis-3/4"
+                class="space-y-2 [&_div]:flex [&_div]:gap-x-4 [&_div_span:first-of-type]:basis-2/4 [&_div_span:first-of-type]:font-medium md:[&_div_span:first-of-type]:basis-1/4 [&_div_span:last-of-type]:basis-2/4 md:[&_div_span:last-of-type]:basis-3/4"
             >
                 <div>
                     <span>ID</span>

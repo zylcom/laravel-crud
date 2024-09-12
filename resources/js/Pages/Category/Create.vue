@@ -28,7 +28,7 @@ function createCategory() {
 
     <AuthenticatedLayout>
         <div class="p-6">
-            <h2 class="text-lg sm:text-3xl font-semibold text-black mb-6">Create New Category</h2>
+            <h2 class="mb-6 text-lg font-semibold text-black sm:text-3xl">Create New Category</h2>
 
             <form class="space-y-6" @submit.prevent="createCategory">
                 <div>
@@ -40,7 +40,7 @@ function createCategory() {
                 </div>
 
                 <PrimaryButton
-                    class="w-full text-center flex justify-center"
+                    class="flex w-full justify-center text-center"
                     type="submit"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"

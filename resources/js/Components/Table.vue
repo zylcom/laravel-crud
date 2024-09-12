@@ -1,6 +1,6 @@
 <template>
-    <table class="w-full text-sm text-left rtl:text-right text-gray-700">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+    <table class="w-full text-left text-sm text-gray-700 rtl:text-right">
+        <thead class="bg-gray-100 text-xs uppercase text-gray-700">
             <slot name="tableHead" />
         </thead>
         <tbody>

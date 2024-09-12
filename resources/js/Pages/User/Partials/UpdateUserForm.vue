@@ -46,7 +46,7 @@ watch(show, (newValue) => {
 <template>
     <Modal :show="show" @close="$emit('close')">
         <div class="max-h-full overflow-y-auto p-1">
-            <h2 class="text-xl font-semibold text-black mb-6">Edit User</h2>
+            <h2 class="mb-6 text-xl font-semibold text-black">Edit User</h2>
 
             <form class="space-y-6" @submit.prevent="updateUser">
                 <div>
@@ -68,7 +68,7 @@ watch(show, (newValue) => {
                 <div>
                     <InputLabel value="Role" />
 
-                    <div class="border border-gray-300 rounded-md shadow-sm p-2 flex items-center gap-8">
+                    <div class="flex items-center gap-8 rounded-md border border-gray-300 p-2 shadow-sm">
                         <div class="flex items-center">
                             <RadioInput id="user" value="user" name="user-role" v-model="form.role" :checked="form.role === 'user'" />
                             <InputLabel for="user" value="User" class="ms-2 cursor-pointer" />
@@ -83,7 +83,7 @@ watch(show, (newValue) => {
                     <InputError :message="form.errors.role" class="mt-2" />
                 </div>
 
-                <div class="flex gap-x-2 justify-end">
+                <div class="flex justify-end gap-x-2">
                     <SecondaryButton type="button" @click="$emit('close')">Cancel</SecondaryButton>
 
                     <PrimaryButton type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Save</PrimaryButton>

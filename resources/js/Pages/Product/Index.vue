@@ -23,11 +23,11 @@ function changeSelectedIndex(id: number) {
 
     <AuthenticatedLayout>
         <div class="p-6">
-            <div class="flex justify-between mb-6 sm:items-center gap-2 flex-col sm:flex-row">
-                <h2 class="text-lg sm:text-3xl font-semibold text-black">All Products</h2>
+            <div class="mb-6 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+                <h2 class="text-lg font-semibold text-black sm:text-3xl">All Products</h2>
 
                 <Link
-                    class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                    class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25"
                     type="button"
                     href="/products/create"
                     >Create new product</Link
@@ -56,7 +56,7 @@ function changeSelectedIndex(id: number) {
 
                     <template #tableBody>
                         <tr
-                            class="border-b border-b-gray-400 relative"
+                            class="relative border-b border-b-gray-400"
                             :class="product.stock < 10 ? 'bg-red-100' : 'bg-white'"
                             v-for="product in products"
                             :key="product.id"

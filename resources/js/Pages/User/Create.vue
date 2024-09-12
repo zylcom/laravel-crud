@@ -34,7 +34,7 @@ function createUser() {
 
     <AuthenticatedLayout>
         <div class="p-6">
-            <h2 class="text-lg sm:text-3xl font-semibold text-black mb-6">Create New User</h2>
+            <h2 class="mb-6 text-lg font-semibold text-black sm:text-3xl">Create New User</h2>
 
             <form class="space-y-6" @submit.prevent="createUser">
                 <div>
@@ -79,7 +79,7 @@ function createUser() {
                 <div>
                     <InputLabel value="Role" />
 
-                    <div class="border border-gray-300 rounded-md shadow-sm p-2 flex items-center gap-8">
+                    <div class="flex items-center gap-8 rounded-md border border-gray-300 p-2 shadow-sm">
                         <div class="flex items-center">
                             <RadioInput id="user" value="user" name="user-role" v-model="form.role" :checked="form.role === 'user'" />
                             <InputLabel for="user" value="User" class="ms-2 cursor-pointer" />
@@ -95,7 +95,7 @@ function createUser() {
                 </div>
 
                 <PrimaryButton
-                    class="w-full text-center flex justify-center"
+                    class="flex w-full justify-center text-center"
                     type="submit"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"

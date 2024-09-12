@@ -47,7 +47,7 @@ watch(show, (newValue) => {
 <template>
     <Modal :show="show" @close="$emit('close')">
         <div class="max-h-full overflow-y-auto p-1">
-            <h2 class="text-xl font-semibold text-black mb-6">Edit Product</h2>
+            <h2 class="mb-6 text-xl font-semibold text-black">Edit Product</h2>
 
             <form class="space-y-6" @submit.prevent="updateProduct">
                 <div>
@@ -80,7 +80,7 @@ watch(show, (newValue) => {
                     <select
                         id="category"
                         v-model="form.category_id"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                         required
                     >
                         <option selected disabled value="" class="text-gray-500">Choose a category</option>
@@ -118,7 +118,7 @@ watch(show, (newValue) => {
                 <div>
                     <InputLabel value="Status" />
 
-                    <div class="border border-gray-300 rounded-md shadow-sm p-2 flex items-center gap-8">
+                    <div class="flex items-center gap-8 rounded-md border border-gray-300 p-2 shadow-sm">
                         <div class="flex items-center">
                             <RadioInput id="available" value="available" name="product-status" v-model="form.status" :checked="form.status === 'available'" />
                             <InputLabel for="available" value="Available" class="ms-2 cursor-pointer" />
@@ -139,7 +139,7 @@ watch(show, (newValue) => {
                     <InputError :message="form.errors.status" class="mt-2" />
                 </div>
 
-                <div class="flex gap-x-2 justify-end">
+                <div class="flex justify-end gap-x-2">
                     <SecondaryButton type="button" @click="$emit('close')">Cancel</SecondaryButton>
 
                     <PrimaryButton type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Save</PrimaryButton>
