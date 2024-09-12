@@ -3,53 +3,64 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 
 const props = withDefaults(
     defineProps<{
-        align?: "left" | "right";
-        width?: "48";
-        contentClasses?: string;
+        align?: "left" | "right" | "left-center" | "right-center";
+        index?: number | string | null;
+        selectedIndex?: number | string | null;
     }>(),
     {
         align: "right",
-        width: "48",
-        contentClasses: "py-1 bg-white",
+        index: null,
+        selectedIndex: null,
     },
 );
+const emit = defineEmits(["changeSelectedIndex"]);
 
-const closeOnEscape = (e: KeyboardEvent) => {
-    if (open.value && e.key === "Escape") {
-        open.value = false;
-    }
-};
-
-onMounted(() => document.addEventListener("keydown", closeOnEscape));
-onUnmounted(() => document.removeEventListener("keydown", closeOnEscape));
-
-const widthClass = computed(() => {
-    return {
-        48: "w-48",
-    }[props.width.toString()];
-});
-
+const index = computed(() => props.index);
+const selectedIndex = computed(() => props.selectedIndex);
+const show = ref(false);
 const alignmentClasses = computed(() => {
     if (props.align === "left") {
         return "ltr:origin-top-left rtl:origin-top-right start-0";
+    } else if (props.align === "left-center") {
+        return "ltr:origin-top-left rtl:origin-top-right start-full -top-full";
     } else if (props.align === "right") {
         return "ltr:origin-top-right rtl:origin-top-left end-0";
+    } else if (props.align === "right-center") {
+        return "ltr:origin-top-right rtl:origin-top-left end-full -top-full";
     } else {
         return "origin-top";
     }
 });
 
-const open = ref(false);
+function closeOnEscape(e: KeyboardEvent) {
+    if (show.value && e.key === "Escape") {
+        show.value = false;
+    }
+}
+
+function toggleDropdown() {
+    show.value = !show.value;
+
+    emit("changeSelectedIndex");
+}
+
+function hideDropdown() {
+    show.value = false;
+
+    emit("changeSelectedIndex");
+}
+
+onMounted(() => document.addEventListener("keydown", closeOnEscape));
+onUnmounted(() => document.removeEventListener("keydown", closeOnEscape));
 </script>
 
 <template>
     <div class="relative">
-        <div @click="open = !open">
-            <slot name="trigger" />
-        </div>
+        <button class="p-2 rounded-lg hover:bg-gray-100 mx-auto block" title="Open dropdown" role="button" type="button" @click="toggleDropdown">
+            <span class="sr-only">Open dropdown</span>
 
-        <!-- Full Screen Dropdown Overlay -->
-        <div v-show="open" class="fixed inset-0 z-40" @click="open = false"></div>
+            <slot name="trigger" />
+        </button>
 
         <Transition
             enter-active-class="transition ease-out duration-200"
@@ -60,13 +71,13 @@ const open = ref(false);
             leave-to-class="opacity-0 scale-95"
         >
             <div
-                v-show="open"
-                class="absolute z-50 mt-2 rounded-md shadow-lg"
-                :class="[widthClass, alignmentClasses]"
+                v-show="show && selectedIndex === index"
+                class="bg-white absolute z-50 my-2 rounded-md shadow-lg whitespace-nowrap"
+                :class="[alignmentClasses]"
                 style="display: none"
-                @click="open = false"
+                @click="hideDropdown"
             >
-                <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
+                <div class="rounded-md ring-1 ring-black ring-opacity-5 p-1">
                     <slot name="content" />
                 </div>
             </div>

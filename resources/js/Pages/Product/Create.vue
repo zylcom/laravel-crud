@@ -8,6 +8,7 @@ import RadioInput from "@/Components/RadioInput.vue";
 import { Head } from "@inertiajs/vue3";
 import { RefreshCwIcon } from "lucide-vue-next";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 defineProps<{
     categories: any;
@@ -112,7 +113,7 @@ function createProduct() {
                 <div>
                     <InputLabel value="Status" />
 
-                    <div class="border border-gray-300 rounded-md shadow-sm p-2 flex items-center gap-8">
+                    <div class="border border-gray-300 rounded-md shadow-sm p-2 flex sm:items-center gap-y-1 sm:gap-8 flex-col sm:flex-row">
                         <div class="flex items-center">
                             <RadioInput
                                 id="available"
@@ -141,24 +142,11 @@ function createProduct() {
                     <InputError :message="form.errors.status" class="mt-2" />
                 </div>
 
-                <div class="flex gap-x-2">
-                    <!-- <button
-                        type="button"
-                        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                        >
-                            Cancel
-                        </button> -->
+                <PrimaryButton class="w-full flex items-center justify-center gap-x-2" type="submit" :disabled="form.processing">
+                    <RefreshCwIcon class="h-5 w-5 animate-spin" v-show="form.processing" />
 
-                    <button
-                        type="submit"
-                        class="grow text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm justify-center items-center px-5 py-2.5 focus:outline-none flex gap-2"
-                        :disabled="form.processing"
-                    >
-                        <RefreshCwIcon class="h-5 w-5 animate-spin" v-show="form.processing" />
-
-                        Save
-                    </button>
-                </div>
+                    Save
+                </PrimaryButton>
             </form>
         </div>
     </AuthenticatedLayout>

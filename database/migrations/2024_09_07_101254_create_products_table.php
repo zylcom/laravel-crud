@@ -17,14 +17,12 @@ return new class extends Migration
             $table->string('name');
             $table->double('price');
             $table->double('stock');
-            $table->string('description')->nullable();
-            /*$table->string('category');*/
+            $table->text('description')->nullable();
             $table->enum('status', ['available', 'unavailable'])->default('unavailable');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('category_id');
+            $table->foreignId('category_id');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            /*$table->morphs('productable');*/
         });
     }
 

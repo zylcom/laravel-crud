@@ -8,6 +8,8 @@ import Modal from "@/Components/Modal.vue";
 import NumberInput from "@/Components/NumberInput.vue";
 import RadioInput from "@/Components/RadioInput.vue";
 import { RefreshCwIcon } from "lucide-vue-next";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps<{ product: any; show: boolean; categories: any }>();
 const emit = defineEmits(["close"]);
@@ -138,24 +140,14 @@ watch(show, (newValue) => {
                     <InputError :message="form.errors.status" class="mt-2" />
                 </div>
 
-                <div class="flex gap-x-2">
-                    <button
-                        type="button"
-                        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                        @click="$emit('close')"
-                    >
-                        Cancel
-                    </button>
+                <div class="flex gap-x-2 justify-end">
+                    <SecondaryButton type="button" @click="$emit('close')">Cancel</SecondaryButton>
 
-                    <button
-                        type="submit"
-                        class="grow text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm justify-center items-center px-5 py-2.5 me-2 mb-2 focus:outline-none flex gap-2"
-                        :disabled="form.processing"
-                    >
+                    <PrimaryButton class="flex items-center justify-center gap-x-2" type="submit" :disabled="form.processing">
                         <RefreshCwIcon class="h-5 w-5 animate-spin" v-show="form.processing" />
 
                         Save
-                    </button>
+                    </PrimaryButton>
                 </div>
             </form>
         </div>

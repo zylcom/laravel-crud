@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { Head, Link } from "@inertiajs/vue3";
-import ActionDropdown from "@/Components/ActionDropdown.vue";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import Table from "@/Components/Table.vue";
 import { ref } from "vue";
 import Alert from "@/Components/Alert.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import ProductActionDropdown from "@/Components/ProductActionDropdown.vue";
+import Table from "@/Components/Table.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 defineProps<{
     products: any;
@@ -23,15 +24,12 @@ function changeSelectedIndex(id: number) {
 
     <AuthenticatedLayout>
         <div class="p-6">
-            <div class="flex justify-between mb-6 items-center gap-x-2">
+            <div class="flex justify-between mb-6 sm:items-center gap-2 flex-col sm:flex-row">
                 <h2 class="text-lg sm:text-3xl font-semibold text-black">All Products</h2>
 
-                <Link
-                    type="button"
-                    class="text-blue-700 text-xs rounded-full hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium sm:text-sm px-5 py-2 text-center"
-                    href="/dashboard/products/create"
-                    >Create new product</Link
-                >
+                <SecondaryButton>
+                    <Link type="button" href="/products/create">Create new product</Link>
+                </SecondaryButton>
             </div>
 
             <Alert />
@@ -45,6 +43,7 @@ function changeSelectedIndex(id: number) {
                             <th scope="col" class="px-6 py-3">ID</th>
                             <th scope="col" class="px-6 py-3">Product name</th>
                             <th scope="col" class="px-6 py-3">Category</th>
+                            <th scope="col" class="px-6 py-3" v-if="$page.props.auth.user.role === 'admin'">Owner</th>
                             <th scope="col" class="px-6 py-3">Price</th>
                             <th scope="col" class="px-6 py-3">Stock</th>
                             <th scope="col" class="px-6 py-3">Status</th>
@@ -63,12 +62,18 @@ function changeSelectedIndex(id: number) {
                             <td class="px-6 py-4">{{ product.id }}</td>
                             <th scope="row" class="px-6 py-4 font-medium">{{ product.name }}</th>
                             <td class="px-6 py-4">{{ product.category.name }}</td>
+                            <td class="px-6 py-4" v-if="$page.props.auth.user.role === 'admin'">{{ product.user.name }}</td>
                             <td class="px-6 py-4">{{ product.price }}</td>
                             <td class="px-6 py-4">{{ product.stock }}</td>
                             <td class="px-6 py-4">{{ product.status }}</td>
                             <td class="px-6 py-4">{{ product.description }}</td>
                             <td class="px-6 py-4">
-                                <ActionDropdown :product="product" :categories="categories" :dropdownIndex="selectedIndex" @toggle="changeSelectedIndex" />
+                                <ProductActionDropdown
+                                    :product="product"
+                                    :categories="categories"
+                                    :selectedIndex="selectedIndex"
+                                    @changeSelectedIndex="changeSelectedIndex"
+                                />
                             </td>
                         </tr>
                     </template>

@@ -7,6 +7,7 @@ use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -17,10 +18,17 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::with('category')->whereBelongsTo($request->user())->orderBy('id', 'asc')->get();
-        $categories = Category::all();
+        $products = [];
 
-        /*dd($categories);*/
+        $response = Gate::inspect('viewAll', Product::class);
+
+        if ($response->allowed()) {
+            $products = Product::with('category', 'user')->orderBy('id', 'asc')->get();
+        } else {
+            $products = Product::with('category')->whereBelongsTo($request->user())->orderBy('id', 'asc')->get();
+        }
+
+        $categories = Category::all();
 
         return Inertia::render('Product/Index', ['products' => $products, 'categories' => $categories]);
     }
@@ -40,6 +48,7 @@ class ProductController extends Controller
      */
     public function store(ProductCreateRequest $request)
     {
+        Gate::authorize('create', Product::class);
 
         $product = $request->validated();
         $request->user()->products()->create($product);
@@ -52,22 +61,16 @@ class ProductController extends Controller
      */
     public function show(Request $request, string $id)
     {
-        $product = Product::with('category')->where('user_id', $request->user()->id)->where('id', $id)->first();
+        $product = Product::with('category', 'user')->where('id', $id)->first();
         $categories = Category::all();
 
         if (! $product) {
             abort(404);
         }
 
-        return Inertia::render('Product/Detail', ['product' => $product, 'categories' => $categories]);
-    }
+        Gate::authorize('view', $product);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return Inertia::render('Product/Detail', ['product' => $product, 'categories' => $categories]);
     }
 
     /**
@@ -75,11 +78,13 @@ class ProductController extends Controller
      */
     public function update(ProductUpdateRequest $request, string $id)
     {
-        $product = Product::where('user_id', $request->user()->id)->where('id', $id)->first();
+        $product = Product::where('id', $id)->first();
 
         if (! $product) {
             abort(404);
         }
+
+        Gate::authorize('update', $product);
 
         $product->update($request->validated());
 
@@ -91,11 +96,13 @@ class ProductController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
-        $product = Product::where('user_id', $request->user()->id)->where('id', $id)->first();
+        $product = Product::where('id', $id)->first();
 
         if (! $product) {
             abort(404);
         }
+
+        Gate::authorize('delete', $product);
 
         $product->delete();
 

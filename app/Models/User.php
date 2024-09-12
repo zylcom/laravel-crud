@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\UserRole;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,6 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -41,8 +43,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
+            'email_verified_at' => 'datetime:D, d M Y',
             'password' => 'hashed',
+            'role' => UserRole::class,
+            'created_at' => 'datetime:D, d M Y',
+            'updated_at' => 'datetime:D, d M Y',
         ];
     }
 

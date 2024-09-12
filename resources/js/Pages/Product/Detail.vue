@@ -74,17 +74,18 @@ function closeModal() {
                 </div>
 
                 <div>
+                    <span>Owner</span>
+                    <span>{{ product.user.name }}</span>
+                </div>
+
+                <div>
                     <span>Created At</span>
-                    <span>{{
-                        new Intl.DateTimeFormat("id-ID", { year: "numeric", month: "short", day: "numeric" }).format(new Date(product.created_at))
-                    }}</span>
+                    <span>{{ product.created_at }}</span>
                 </div>
 
                 <div>
                     <span>Updated At</span>
-                    <span>{{
-                        new Intl.DateTimeFormat("id-ID", { year: "numeric", month: "short", day: "numeric" }).format(new Date(product.updated_at))
-                    }}</span>
+                    <span>{{ product.updated_at }}</span>
                 </div>
             </div>
 

@@ -19,6 +19,8 @@ class Product extends Model
     {
         return [
             'status' => ProductStatus::class,
+            'created_at' => 'datetime:D, d M Y',
+            'updated_at' => 'datetime:D, d M Y',
         ];
     }
 

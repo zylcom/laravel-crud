@@ -1,10 +1,9 @@
 <script setup lang="ts">
+import { ChevronDownIcon, LayoutDashboardIcon, LogOut, MenuIcon, ShoppingBagIcon, UserIcon, UsersRoundIcon } from "lucide-vue-next";
+import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
-import DropdownLink from "@/Components/DropdownLink.vue";
-import { Link } from "@inertiajs/vue3";
-import { ChevronDownIcon, LayoutDashboardIcon, MenuIcon, ShoppingBagIcon, UsersRoundIcon } from "lucide-vue-next";
 
 const showSidebar = ref(false);
 </script>
@@ -29,18 +28,43 @@ const showSidebar = ref(false);
                     </Link>
                 </div>
 
-                <Dropdown align="right" width="48">
+                <Dropdown align="right">
                     <template #trigger>
                         <button type="button" class="flex gap-x-2 text-gray-500 hover:text-gray-700 transition ease-in-out duration-150">
-                            {{ $page.props.auth.user.name }}
+                            {{ $page.props.auth.user.name }} {{ $page.props.auth.user.role === "admin" ? "(Admin)" : "" }}
 
                             <ChevronDownIcon />
                         </button>
                     </template>
 
                     <template #content>
-                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
-                        <DropdownLink :href="route('logout')" method="post" as="button"> Log Out </DropdownLink>
+                        <div class="flex flex-col [&_button]:rounded divide-y">
+                            <Link
+                                :href="route('profile.edit')"
+                                type="button"
+                                title="Profile"
+                                class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-gray-100"
+                            >
+                                <span>
+                                    <UserIcon class="w-4 h-4" />
+                                    Profile
+                                </span>
+                            </Link>
+
+                            <Link
+                                :href="route('logout')"
+                                as="button"
+                                method="post"
+                                type="button"
+                                title="Log out"
+                                class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-gray-100"
+                            >
+                                <span>
+                                    <LogOut class="w-4 h-4" />
+                                    Log out
+                                </span>
+                            </Link>
+                        </div>
                     </template>
                 </Dropdown>
             </div>
@@ -64,12 +88,18 @@ const showSidebar = ref(false);
                         <span class="ms-3">Dashboard</span>
                     </Link>
                 </li>
-                <!-- <li>
-                    <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+
+                <li v-if="$page.props.auth.user.role === 'admin'">
+                    <Link
+                        :href="route('users.index')"
+                        :class="{ 'bg-gray-100': route().current('users.*') }"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    >
                         <UsersRoundIcon />
                         <span class="flex-1 ms-3 whitespace-nowrap">Users</span>
-                    </a>
-                    </li> -->
+                    </Link>
+                </li>
+
                 <li>
                     <Link
                         :href="route('products.index')"
