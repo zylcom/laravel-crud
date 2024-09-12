@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, Link } from "@inertiajs/vue3";
-import { LayoutGridIcon, ShieldIcon, ShoppingBagIcon, UsersIcon } from "lucide-vue-next";
+import { LayoutGridIcon, ShieldIcon, ShoppingBagIcon, TagsIcon, UsersIcon } from "lucide-vue-next";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 
 defineProps<{
@@ -117,6 +117,20 @@ defineProps<{
                                 <h2 class="text-xl font-semibold text-black">Products Management Feature</h2>
 
                                 <p class="mt-4 text-sm/relaxed">Products management to manage products in your application.</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10"
+                        >
+                            <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
+                                <TagsIcon />
+                            </div>
+
+                            <div class="pt-3 sm:pt-5">
+                                <h2 class="text-xl font-semibold text-black">Categories Management Feature</h2>
+
+                                <p class="mt-4 text-sm/relaxed">Categories management to manage categories in your application.</p>
                             </div>
                         </div>
                     </div>
