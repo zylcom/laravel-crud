@@ -39,7 +39,11 @@ function closeOnEscape(e: KeyboardEvent) {
 }
 
 function toggleDropdown() {
-    show.value = !show.value;
+    if (selectedIndex.value === null && index.value === null) {
+        show.value = !show.value;
+    } else {
+        show.value = true;
+    }
 
     emit("changeSelectedIndex");
 }

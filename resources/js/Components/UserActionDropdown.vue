@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Link } from "@inertiajs/vue3";
-import Dropdown from "./Dropdown.vue";
 import { EllipsisIcon, ExternalLink, PencilIcon, Trash2Icon } from "lucide-vue-next";
-import UpdateUserForm from "@/Pages/User/Partials/UpdateUserForm.vue";
+import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
+import Dropdown from "./Dropdown.vue";
+import UpdateUserForm from "@/Pages/User/Partials/UpdateUserForm.vue";
 
 const props = defineProps<{
     user: any;
@@ -28,12 +28,14 @@ function closeDeleteModal() {
 }
 
 function changeSelectedIndex() {
+    console.log("changeSelectedIndex", props.user.id);
+
     emit("changeSelectedIndex", props.user.id);
 }
 </script>
 
 <template>
-    <Dropdown :index="user.id" :selectedIndex="selectedIndex" @changeSelectedIndex="changeSelectedIndex">
+    <Dropdown align="right-center" :index="user.id" :selectedIndex="selectedIndex" @changeSelectedIndex="changeSelectedIndex">
         <template #trigger>
             <EllipsisIcon class="w-5 h-5" />
         </template>

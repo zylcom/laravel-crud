@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
+import { Link, router } from "@inertiajs/vue3";
 import Modal from "./Modal.vue";
 import SecondaryButton from "./SecondaryButton.vue";
-import DangerButtonLink from "./DangerButtonLink.vue";
 
 const props = defineProps<{ title: string; message: string; href: string; show: boolean }>();
 const emit = defineEmits(["close"]);
 const show = computed(() => props.show);
+const disabled = ref(false);
+
+router.on("start", () => (disabled.value = true));
+router.on("finish", () => (disabled.value = false));
 </script>
 
 <template>
@@ -19,7 +23,17 @@ const show = computed(() => props.show);
             <div class="mt-6 flex justify-end gap-x-3">
                 <SecondaryButton @click="$emit('close')" title="Cancel">Cancel</SecondaryButton>
 
-                <DangerButtonLink :href="href" method="delete" title="Delete" asLink>Delete</DangerButtonLink>
+                <Link
+                    method="delete"
+                    as="button"
+                    type="button"
+                    title="Delete"
+                    class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                    :href="href"
+                    :disabled="disabled"
+                >
+                    Delete
+                </Link>
             </div>
         </div>
     </Modal>
