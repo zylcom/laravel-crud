@@ -9,7 +9,7 @@ const showSidebar = ref(false);
 </script>
 
 <template>
-    <nav class="fixed top-0 z-50 w-full border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+    <nav class="fixed top-0 z-50 w-full border-b border-gray-200 bg-white">
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center justify-start rtl:justify-end">
@@ -94,7 +94,7 @@ const showSidebar = ref(false);
                         <Link
                             :href="route('users.index')"
                             :class="{ 'bg-gray-100': route().current('users.*') }"
-                            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
                         >
                             <UsersRoundIcon />
                             <span class="ms-3 flex-1 whitespace-nowrap">Users</span>
@@ -105,7 +105,7 @@ const showSidebar = ref(false);
                         <Link
                             :href="route('categories.index')"
                             :class="{ 'bg-gray-100': route().current('categories.*') }"
-                            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
                         >
                             <TagsIcon />
                             <span class="ms-3 flex-1 whitespace-nowrap">Categories</span>

@@ -15,11 +15,7 @@ watch(flash, (newValue) => {
 </script>
 
 <template>
-    <div
-        class="mb-4 flex items-center rounded-lg bg-green-50 p-4 text-green-800 dark:bg-gray-800 dark:text-green-400"
-        role="alert"
-        v-if="flash.message && show"
-    >
+    <div class="mb-4 flex items-center rounded-lg bg-green-50 p-4 text-green-800" role="alert" v-if="flash.message && show">
         <span class="sr-only">Alert info</span>
 
         <div class="ms-3 text-sm font-medium">
@@ -28,7 +24,7 @@ watch(flash, (newValue) => {
 
         <button
             type="button"
-            class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-green-50 p-1.5 text-green-500 hover:bg-green-200 focus:ring-2 focus:ring-green-400 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
+            class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-green-50 p-1.5 text-green-500 hover:bg-green-200 focus:ring-2 focus:ring-green-400"
             aria-label="Close"
             @click="show = false"
         >
