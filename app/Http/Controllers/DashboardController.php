@@ -23,6 +23,7 @@ class DashboardController extends Controller
 
         if ($response->allowed()) {
             $users = User::with('products')->where('id', '!=', $request->user()->id)->orderBy('id', 'asc')->take(10)->get();
+            $products = Product::with('category')->whereBelongsTo($request->user())->where('stock', '<=', '30')->orderBy('stock', 'asc')->get();
         } else {
             $products = Product::with('category')->whereBelongsTo($request->user())->where('stock', '<=', '30')->orderBy('stock', 'asc')->get();
         }

@@ -4,18 +4,18 @@ import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
 import Dropdown from "./Dropdown.vue";
-import UpdateUserForm from "@/Pages/User/Partials/UpdateUserForm.vue";
+import UpdateCategoryForm from "@/Pages/Category/Partials/UpdateCategoryForm.vue";
 
 const props = defineProps<{
-    user: any;
+    category: any;
     selectedIndex: number | string | null;
 }>();
 
 const emit = defineEmits(["changeSelectedIndex"]);
-const showEditModal = ref<boolean>(false);
-const showDeleteConfirmationModal = ref<boolean>(false);
+const showEditModal = ref(false);
+const showDeleteConfirmationModal = ref(false);
 
-function closeEditModal() {
+function closeModal() {
     showEditModal.value = false;
 
     emit("changeSelectedIndex", null);
@@ -28,12 +28,12 @@ function closeDeleteModal() {
 }
 
 function changeSelectedIndex() {
-    emit("changeSelectedIndex", props.user.id);
+    emit("changeSelectedIndex", props.category.id);
 }
 </script>
 
 <template>
-    <Dropdown align="right-center" :index="user.id" :selectedIndex="selectedIndex" @changeSelectedIndex="changeSelectedIndex">
+    <Dropdown align="right-center" :index="category.id" :selectedIndex="selectedIndex" @changeSelectedIndex="changeSelectedIndex">
         <template #trigger>
             <EllipsisIcon class="w-5 h-5" />
         </template>
@@ -41,9 +41,9 @@ function changeSelectedIndex() {
         <template #content>
             <div class="flex flex-col [&_button]:rounded divide-y">
                 <Link
-                    :href="route('users.show', user.id)"
+                    :href="route('categories.show', category.id)"
                     type="button"
-                    title="View detail user"
+                    title="View detail category"
                     class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-gray-100"
                 >
                     <span>
@@ -52,7 +52,7 @@ function changeSelectedIndex() {
                     </span>
                 </Link>
 
-                <button class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-gray-100" title="Edit user" @click="showEditModal = true">
+                <button class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-gray-100" title="Edit category" @click="showEditModal = true">
                     <span>
                         <PencilIcon class="w-4 h-4" />
                         Edit
@@ -61,7 +61,7 @@ function changeSelectedIndex() {
 
                 <button
                     class="p-1 [&_span]:flex [&_span]:items-center [&_span]:gap-2 hover:bg-red-100"
-                    title="Delete user"
+                    title="Delete category"
                     @click="showDeleteConfirmationModal = true"
                 >
                     <span>
@@ -74,12 +74,12 @@ function changeSelectedIndex() {
     </Dropdown>
 
     <DeleteConfirmation
-        title="Delete User"
-        message="All of its resources and data products owned by this user will be permanently deleted."
-        :href="route('users.destroy', user.id)"
+        title="Delete category"
+        message="All of its resources and products with this category will be permanently deleted."
+        :href="route('categories.destroy', category.id)"
         :show="showDeleteConfirmationModal"
         @close="closeDeleteModal"
     />
 
-    <UpdateUserForm :show="showEditModal" :user="user" @close="closeEditModal" />
+    <UpdateCategoryForm :show="showEditModal" :category="category" @close="closeModal" />
 </template>

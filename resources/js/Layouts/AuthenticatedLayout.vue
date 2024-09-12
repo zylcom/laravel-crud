@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronDownIcon, LayoutDashboardIcon, LogOut, MenuIcon, ShoppingBagIcon, UserIcon, UsersRoundIcon } from "lucide-vue-next";
+import { ChevronDownIcon, LayoutDashboardIcon, LogOut, MenuIcon, ShoppingBagIcon, TagsIcon, UserIcon, UsersRoundIcon } from "lucide-vue-next";
 import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
@@ -89,16 +89,29 @@ const showSidebar = ref(false);
                     </Link>
                 </li>
 
-                <li v-if="$page.props.auth.user.role === 'admin'">
-                    <Link
-                        :href="route('users.index')"
-                        :class="{ 'bg-gray-100': route().current('users.*') }"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                    >
-                        <UsersRoundIcon />
-                        <span class="flex-1 ms-3 whitespace-nowrap">Users</span>
-                    </Link>
-                </li>
+                <template v-if="$page.props.auth.user.role === 'admin'">
+                    <li>
+                        <Link
+                            :href="route('users.index')"
+                            :class="{ 'bg-gray-100': route().current('users.*') }"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        >
+                            <UsersRoundIcon />
+                            <span class="flex-1 ms-3 whitespace-nowrap">Users</span>
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link
+                            :href="route('categories.index')"
+                            :class="{ 'bg-gray-100': route().current('categories.*') }"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        >
+                            <TagsIcon />
+                            <span class="flex-1 ms-3 whitespace-nowrap">Categories</span>
+                        </Link>
+                    </li>
+                </template>
 
                 <li>
                     <Link

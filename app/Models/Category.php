@@ -13,6 +13,14 @@ class Category extends Model
         'name',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime:D, d M Y',
+            'updated_at' => 'datetime:D, d M Y',
+        ];
+    }
+
     public function products()
     {
         return $this->hasMany(Product::class);

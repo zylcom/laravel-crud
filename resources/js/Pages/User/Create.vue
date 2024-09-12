@@ -40,7 +40,7 @@ function createUser() {
                 <div>
                     <InputLabel for="name" value="Name" />
 
-                    <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="Product name" autofocus required />
+                    <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" placeholder="User name" autofocus required />
 
                     <InputError :message="form.errors.name" class="mt-2" />
                 </div>
@@ -94,7 +94,7 @@ function createUser() {
                     <InputError :message="form.errors.role" class="mt-2" />
                 </div>
 
-                <PrimaryButton type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Save</PrimaryButton>
+                <PrimaryButton class="w-full text-center flex justify-center" type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Save</PrimaryButton>
             </form>
         </div>
     </AuthenticatedLayout>

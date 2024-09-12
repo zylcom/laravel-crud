@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -44,6 +45,18 @@ Route::middleware(['auth', 'admin'])->prefix('/users')->group(function () {
     Route::patch('/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::post('/', [UserController::class, 'store'])->name('users.store');
+});
+
+// Categories routes
+Route::middleware(['auth', 'admin'])->prefix('/categories')->group(function () {
+    // Users view
+    Route::get('/', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::get('/{id}', [CategoryController::class, 'show'])->name('categories.show');
+
+    Route::patch('/{id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::post('/', [CategoryController::class, 'store'])->name('categories.store');
 });
 
 // Profile routes
