@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { Head, Link } from "@inertiajs/vue3";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import Table from "@/Components/Table.vue";
 import { ref } from "vue";
-import UserActionDropdown from "@/Components/UserActionDropdown.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Alert from "@/Components/Alert.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
+import Table from "@/Components/Table.vue";
+import UserActionDropdown from "@/Components/UserActionDropdown.vue";
 
 defineProps<{
     users: any;
@@ -26,9 +25,12 @@ function changeSelectedIndex(id: number | string | null) {
             <div class="flex justify-between mb-6 sm:items-center gap-2 flex-col sm:flex-row">
                 <h2 class="text-lg sm:text-3xl font-semibold text-black">All Users</h2>
 
-                <SecondaryButton>
-                    <Link type="button" href="/users/create">Create new user</Link>
-                </SecondaryButton>
+                <Link
+                    class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                    type="button"
+                    href="/users/create"
+                    >Create new user</Link
+                >
             </div>
 
             <Alert />

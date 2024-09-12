@@ -1,13 +1,12 @@
 <script setup lang="ts">
+import { Head } from "@inertiajs/vue3";
 import { useForm } from "@inertiajs/vue3";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import TextInput from "@/Components/TextInput.vue";
-import RadioInput from "@/Components/RadioInput.vue";
-import { Head } from "@inertiajs/vue3";
-import { RefreshCwIcon } from "lucide-vue-next";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import RadioInput from "@/Components/RadioInput.vue";
+import TextInput from "@/Components/TextInput.vue";
 
 const form = useForm({
     name: "",
@@ -95,11 +94,7 @@ function createUser() {
                     <InputError :message="form.errors.role" class="mt-2" />
                 </div>
 
-                <PrimaryButton class="w-full flex items-center justify-center gap-x-2" type="submit" :disabled="form.processing">
-                    <RefreshCwIcon class="h-5 w-5 animate-spin" v-show="form.processing" />
-
-                    Save
-                </PrimaryButton>
+                <PrimaryButton type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Save</PrimaryButton>
             </form>
         </div>
     </AuthenticatedLayout>

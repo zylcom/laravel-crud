@@ -5,7 +5,6 @@ import Alert from "@/Components/Alert.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import ProductActionDropdown from "@/Components/ProductActionDropdown.vue";
 import Table from "@/Components/Table.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 defineProps<{
     products: any;
@@ -27,9 +26,12 @@ function changeSelectedIndex(id: number) {
             <div class="flex justify-between mb-6 sm:items-center gap-2 flex-col sm:flex-row">
                 <h2 class="text-lg sm:text-3xl font-semibold text-black">All Products</h2>
 
-                <SecondaryButton>
-                    <Link type="button" href="/products/create">Create new product</Link>
-                </SecondaryButton>
+                <Link
+                    class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                    type="button"
+                    href="/products/create"
+                    >Create new product</Link
+                >
             </div>
 
             <Alert />

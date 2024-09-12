@@ -3,13 +3,12 @@ import { computed, watch } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import TextInput from "@/Components/TextInput.vue";
 import Modal from "@/Components/Modal.vue";
 import NumberInput from "@/Components/NumberInput.vue";
-import RadioInput from "@/Components/RadioInput.vue";
-import { RefreshCwIcon } from "lucide-vue-next";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import RadioInput from "@/Components/RadioInput.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
 
 const props = defineProps<{ product: any; show: boolean; categories: any }>();
 const emit = defineEmits(["close"]);
@@ -143,11 +142,7 @@ watch(show, (newValue) => {
                 <div class="flex gap-x-2 justify-end">
                     <SecondaryButton type="button" @click="$emit('close')">Cancel</SecondaryButton>
 
-                    <PrimaryButton class="flex items-center justify-center gap-x-2" type="submit" :disabled="form.processing">
-                        <RefreshCwIcon class="h-5 w-5 animate-spin" v-show="form.processing" />
-
-                        Save
-                    </PrimaryButton>
+                    <PrimaryButton type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Save</PrimaryButton>
                 </div>
             </form>
         </div>
