@@ -55,7 +55,6 @@ watch(show, (newValue) => {
                     <InputError :message="form.errors.name" class="mt-2" />
                 </div>
 
-
                 <div class="flex gap-x-2 justify-end">
                     <SecondaryButton type="button" @click="$emit('close')">Cancel</SecondaryButton>
 

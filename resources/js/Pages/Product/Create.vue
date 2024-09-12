@@ -141,7 +141,13 @@ function createProduct() {
                     <InputError :message="form.errors.status" class="mt-2" />
                 </div>
 
-                <PrimaryButton class="w-full text-center flex justify-center" type="submit" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Save</PrimaryButton>
+                <PrimaryButton
+                    class="w-full text-center flex justify-center"
+                    type="submit"
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                    >Save</PrimaryButton
+                >
             </form>
         </div>
     </AuthenticatedLayout>
