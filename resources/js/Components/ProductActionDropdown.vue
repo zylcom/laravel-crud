@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 import Dropdown from "./Dropdown.vue";
 import { EllipsisIcon, ExternalLink, PencilIcon, Trash2Icon } from "lucide-vue-next";
 import { ref } from "vue";
@@ -30,6 +30,10 @@ function closeDeleteModal() {
 
 function changeSelectedIndex() {
     emit("changeSelectedIndex", props.product.id);
+}
+
+function deleteProduct() {
+    router.delete(route("products.destroy", { id: props.product.id, redirect_to: "products.index" }));
 }
 </script>
 
@@ -77,9 +81,9 @@ function changeSelectedIndex() {
     <DeleteConfirmation
         title="Delete Product"
         message="All of its resources will be permanently deleted."
-        :href="route('products.destroy', product.id)"
         :show="showDeleteConfirmationModal"
         @close="closeDeleteModal"
+        @delete="deleteProduct"
     />
     <UpdateProductForm :categories="categories" :show="showEditModal" :product="product" @close="closeModal" />
 </template>

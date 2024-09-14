@@ -6,6 +6,7 @@ use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\Category;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -88,7 +89,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
         $user = User::where('id', $id)->first();
 
@@ -97,6 +98,11 @@ class UserController extends Controller
         }
 
         $user->delete();
+        $redirect_to = $request->query('redirect_to');
+
+        if ($redirect_to) {
+            return Redirect::route($redirect_to)->with('message', 'User deleted successfully.')->with('timestamps', now());
+        }
 
         return back()->with('message', 'User deleted successfully.')->with('timestamps', now());
     }

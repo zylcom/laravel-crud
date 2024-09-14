@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head } from "@inertiajs/vue3";
+import { Head, router } from "@inertiajs/vue3";
 import { ref } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Alert from "@/Components/Alert.vue";
@@ -7,14 +7,17 @@ import ProductActionDropdown from "@/Components/ProductActionDropdown.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Table from "@/Components/Table.vue";
 import UpdateUserForm from "./Partials/UpdateUserForm.vue";
+import DangerButton from "@/Components/DangerButton.vue";
+import DeleteConfirmation from "@/Components/DeleteConfirmation.vue";
 
-defineProps<{
+const props = defineProps<{
     user: any;
     categories: any;
 }>();
 
 const show = ref<boolean>(false);
 const selectedIndex = ref<number | string | null>(null);
+const showDeleteConfirmationModal = ref(false);
 
 function changeSelectedIndex(id: number | string | null) {
     selectedIndex.value === id ? (selectedIndex.value = null) : (selectedIndex.value = id);
@@ -23,17 +26,28 @@ function changeSelectedIndex(id: number | string | null) {
 function closeModal() {
     show.value = false;
 }
+
+function closeDeleteModal() {
+    showDeleteConfirmationModal.value = false;
+}
+
+function deleteUser() {
+    router.delete(route("users.destroy", { id: props.user.id, redirect_to: "users.index" }));
+}
 </script>
 
 <template>
-    <Head title="Detail Product" />
+    <Head title="Detail User" />
 
     <AuthenticatedLayout>
         <div class="p-6">
             <div class="mb-6 flex items-center justify-between border-b pb-3">
                 <h2 class="text-lg font-semibold text-black sm:text-3xl">Details</h2>
 
-                <SecondaryButton @click="show = true">Edit</SecondaryButton>
+                <div>
+                    <DangerButton title="Delete user" class="mr-2" @click="showDeleteConfirmationModal = true">Delete</DangerButton>
+                    <SecondaryButton title="Edit user" @click="show = true">Edit</SecondaryButton>
+                </div>
             </div>
 
             <Alert />
@@ -126,6 +140,13 @@ function closeModal() {
             </div>
         </div>
 
+        <DeleteConfirmation
+            title="Delete User"
+            message="All of its resources and data products owned by this user will be permanently deleted."
+            :show="showDeleteConfirmationModal"
+            @close="closeDeleteModal"
+            @delete="deleteUser"
+        />
         <UpdateUserForm :show="show" :user="user" @close="closeModal" />
     </AuthenticatedLayout>
 </template>

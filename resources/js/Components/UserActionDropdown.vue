@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { EllipsisIcon, ExternalLink, PencilIcon, Trash2Icon } from "lucide-vue-next";
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 import { ref } from "vue";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
 import Dropdown from "./Dropdown.vue";
@@ -29,6 +29,10 @@ function closeDeleteModal() {
 
 function changeSelectedIndex() {
     emit("changeSelectedIndex", props.user.id);
+}
+
+function deleteUser() {
+    router.delete(route("users.destroy", { id: props.user.id, redirect_to: "users.index" }));
 }
 </script>
 
@@ -76,9 +80,9 @@ function changeSelectedIndex() {
     <DeleteConfirmation
         title="Delete User"
         message="All of its resources and data products owned by this user will be permanently deleted."
-        :href="route('users.destroy', user.id)"
         :show="showDeleteConfirmationModal"
         @close="closeDeleteModal"
+        @delete="deleteUser"
     />
 
     <UpdateUserForm :show="showEditModal" :user="user" @close="closeEditModal" />

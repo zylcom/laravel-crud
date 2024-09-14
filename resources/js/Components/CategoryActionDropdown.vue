@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { EllipsisIcon, ExternalLink, PencilIcon, Trash2Icon } from "lucide-vue-next";
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 import { ref } from "vue";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
 import Dropdown from "./Dropdown.vue";
@@ -29,6 +29,10 @@ function closeDeleteModal() {
 
 function changeSelectedIndex() {
     emit("changeSelectedIndex", props.category.id);
+}
+
+function deleteCategory() {
+    router.delete(route("categories.destroy", { id: props.category.id, redirect_to: "categories.index" }));
 }
 </script>
 
@@ -76,9 +80,9 @@ function changeSelectedIndex() {
     <DeleteConfirmation
         title="Delete category"
         message="All of its resources and products with this category will be permanently deleted."
-        :href="route('categories.destroy', category.id)"
         :show="showDeleteConfirmationModal"
         @close="closeDeleteModal"
+        @delete="deleteCategory"
     />
 
     <UpdateCategoryForm :show="showEditModal" :category="category" @close="closeModal" />

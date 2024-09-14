@@ -105,6 +105,11 @@ class ProductController extends Controller
         Gate::authorize('delete', $product);
 
         $product->delete();
+        $redirect_to = $request->query('redirect_to');
+
+        if ($redirect_to) {
+            return Redirect::route($redirect_to)->with('message', 'Product deleted successfully.')->with('timestamps', now());
+        }
 
         return back()->with('message', 'Product deleted successfully.')->with('timestamps', now());
     }

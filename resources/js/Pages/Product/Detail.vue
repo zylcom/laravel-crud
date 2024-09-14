@@ -1,20 +1,31 @@
 <script setup lang="ts">
-import { Head } from "@inertiajs/vue3";
+import { Head, router } from "@inertiajs/vue3";
 import { ref } from "vue";
 import Alert from "@/Components/Alert.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import DeleteConfirmation from "@/Components/DeleteConfirmation.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import UpdateProductForm from "./Partials/UpdateProductForm.vue";
+import DangerButton from "@/Components/DangerButton.vue";
 
-defineProps<{
+const props = defineProps<{
     product: any;
     categories: any;
 }>();
 
 const show = ref<boolean>(false);
+const showDeleteConfirmationModal = ref(false);
 
 function closeModal() {
     show.value = false;
+}
+
+function closeDeleteModal() {
+    showDeleteConfirmationModal.value = false;
+}
+
+function deleteProduct() {
+    router.delete(route("products.destroy", { id: props.product.id, redirect_to: "products.index" }));
 }
 </script>
 
@@ -26,7 +37,10 @@ function closeModal() {
             <div class="mb-6 flex items-center justify-between border-b pb-3">
                 <h2 class="text-lg font-semibold text-black sm:text-3xl">Details</h2>
 
-                <SecondaryButton @click="show = true">Edit</SecondaryButton>
+                <div>
+                    <DangerButton title="Delete product" class="mr-2" @click="showDeleteConfirmationModal = true">Delete</DangerButton>
+                    <SecondaryButton title="Edit product" @click="show = true">Edit</SecondaryButton>
+                </div>
             </div>
 
             <Alert />
@@ -85,6 +99,13 @@ function closeModal() {
                 </div>
             </div>
 
+            <DeleteConfirmation
+                title="Delete Product"
+                message="All of its resources will be permanently deleted."
+                :show="showDeleteConfirmationModal"
+                @close="closeDeleteModal"
+                @delete="deleteProduct"
+            />
             <UpdateProductForm :categories="categories" :show="show" :product="product" @close="closeModal" />
         </div>
     </AuthenticatedLayout>

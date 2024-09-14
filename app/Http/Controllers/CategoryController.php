@@ -94,7 +94,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
         $category = Category::where('id', $id)->first();
 
@@ -103,6 +103,11 @@ class CategoryController extends Controller
         }
 
         $category->delete();
+        $redirect_to = $request->query('redirect_to');
+
+        if ($redirect_to) {
+            return Redirect::route($redirect_to)->with('message', 'Category deleted successfully.')->with('timestamps', now());
+        }
 
         return back()->with('message', 'Category deleted successfully.')->with('timestamps', now());
     }
