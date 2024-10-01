@@ -6,11 +6,13 @@ const props = withDefaults(
         align?: "left" | "right" | "left-center" | "right-center";
         index?: number | string | null;
         selectedIndex?: number | string | null;
+        disabled?: boolean;
     }>(),
     {
         align: "right",
         index: null,
         selectedIndex: null,
+        disabled: false,
     },
 );
 const emit = defineEmits(["changeSelectedIndex"]);
@@ -60,7 +62,14 @@ onUnmounted(() => document.removeEventListener("keydown", closeOnEscape));
 
 <template>
     <div class="relative">
-        <button class="mx-auto block rounded-lg p-2 hover:bg-gray-100" title="Open dropdown" role="button" type="button" @click="toggleDropdown">
+        <button
+            class="mx-auto block rounded-lg p-2 hover:bg-gray-100"
+            title="Open dropdown"
+            role="button"
+            type="button"
+            @click="toggleDropdown"
+            :disabled="disabled"
+        >
             <span class="sr-only">Open dropdown</span>
 
             <slot name="trigger" />

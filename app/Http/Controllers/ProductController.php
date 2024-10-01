@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProductDeleted;
 use App\Http\Requests\ProductCreateRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
@@ -96,13 +98,17 @@ class ProductController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
-        $product = Product::where('id', $id)->first();
+        $product = Product::with('user')->where('id', $id)->first();
 
         if (! $product) {
             abort(404);
         }
 
         Gate::authorize('delete', $product);
+
+        if ($product->user_id !== $request->user()->id && $request->user()->role === UserRole::Admin) {
+            ProductDeleted::dispatch($product);
+        }
 
         $product->delete();
         $redirect_to = $request->query('redirect_to');

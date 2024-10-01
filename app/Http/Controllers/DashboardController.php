@@ -28,7 +28,7 @@ class DashboardController extends Controller
             $products = Product::with('category')->whereBelongsTo($request->user())->where('stock', '<=', '30')->orderBy('stock', 'asc')->get();
         }
 
-        /*dd($products, $users);*/
+        /*dd($request->user()->notifications);*/
 
         $categories = Category::all();
 

@@ -20,7 +20,21 @@ class DatabaseSeeder extends Seeder
             ->recycle(User::factory()->count(5)->create())
             ->create();
 
-        $user = User::factory()->hasProducts(4)->unverified()->admin()->create([
+        $adminUser = User::factory()->hasProducts(4)->unverified()->admin()->create([
+            'name' => 'Test Admin',
+            'email' => 'admin@example.com',
+        ]);
+
+        $adminUser->products()->create([
+            'name' => 'Test Admin Product',
+            'description' => 'Test Admin Description',
+            'price' => 10000,
+            'stock' => 0,
+            'status' => 'unavailable',
+            'category_id' => fake()->numberBetween(1, 5),
+        ]);
+
+        $user = User::factory()->hasProducts(4)->unverified()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);

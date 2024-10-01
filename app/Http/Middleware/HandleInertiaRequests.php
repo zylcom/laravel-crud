@@ -34,6 +34,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'notifications' => $request->user() ? $request->user()->notifications : [],
             ],
             'flash' => [
                 'message' => fn () => $request->session()->get('message'),
