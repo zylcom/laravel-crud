@@ -49,7 +49,7 @@ Route::middleware(['auth', 'admin'])->prefix('/users')->group(function () {
 
 // Categories routes
 Route::middleware(['auth', 'admin'])->prefix('/categories')->group(function () {
-    // Users view
+    // Categories view
     Route::get('/', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
     Route::get('/{id}', [CategoryController::class, 'show'])->name('categories.show');
