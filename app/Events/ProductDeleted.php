@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -16,7 +17,8 @@ class ProductDeleted
      * Create a new event instance.
      */
     public function __construct(
-        public Product $product
+        public Product $product,
+        public User $user
     ) {
         //
     }

@@ -107,7 +107,7 @@ class ProductController extends Controller
         Gate::authorize('delete', $product);
 
         if ($product->user_id !== $request->user()->id && $request->user()->role === UserRole::Admin) {
-            ProductDeleted::dispatch($product);
+            ProductDeleted::dispatch($product, $request->user());
         }
 
         $product->delete();
