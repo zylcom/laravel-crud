@@ -33,7 +33,12 @@ function changeSelectedIndex() {
 }
 
 function deleteProduct() {
-    router.delete(route("products.destroy", { id: props.product.id, redirect_to: route().current("users.show") ? undefined : "products.index" }));
+    router.delete(
+        route("products.destroy", {
+            id: props.product.id,
+            redirect_to: route().current("users.show") || route().current("categories.show") ? undefined : "products.index",
+        }),
+    );
 }
 </script>
 
