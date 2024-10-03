@@ -9,6 +9,7 @@ export type Notification = {
     type: string;
     data: NotificationData;
     read_at: string;
+    createdAgo: string;
     created_at: string;
     updated_at: string;
 };

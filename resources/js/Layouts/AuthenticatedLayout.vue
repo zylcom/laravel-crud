@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { BellIcon, ChevronDownIcon, LayoutDashboardIcon, LogOut, MenuIcon, ShoppingBagIcon, TagsIcon, UserIcon, UsersRoundIcon } from "lucide-vue-next";
-import { Link } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { Link, usePage } from "@inertiajs/vue3";
+import { computed, ref } from "vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 
 const showSidebar = ref(false);
+const page = usePage();
+const unreadNotifications = computed(() => page.props.auth.notifications.filter((notification) => notification.read_at === null));
 </script>
 
 <template>
@@ -28,17 +30,29 @@ const showSidebar = ref(false);
                     </Link>
                 </div>
 
-                <div class="flex items-center">
+                <div class="flex items-center gap-x-2">
                     <Dropdown align="right" :disabled="$page.props.auth.notifications.length < 1">
                         <template #trigger>
-                            <span class="flex gap-x-2 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700">
+                            <div class="flex gap-x-2 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700">
+                                <span class="sr-only">Notifications</span>
+
                                 <BellIcon />
-                            </span>
+
+                                <div
+                                    class="absolute -top-1 end-0 inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white dark:border-gray-900"
+                                    v-show="$page.props.auth.notifications.length > 0"
+                                >
+                                    {{ unreadNotifications.length }}
+                                </div>
+                            </div>
                         </template>
 
                         <template #content>
-                            <div class="flex flex-col divide-y">
-                                <div v-for="notification in $page.props.auth.notifications" :key="notification.id">{{ notification.data.message }}</div>
+                            <div class="flex w-screen max-w-sm flex-col gap-y-4 px-3 py-2">
+                                <div v-for="notification in $page.props.auth.notifications" :key="notification.id">
+                                    <div class="whitespace-normal text-base font-normal">{{ notification.data.message }}</div>
+                                    <span class="text-xs font-medium text-blue-600 dark:text-blue-500">{{ notification.createdAgo }}</span>
+                                </div>
                             </div>
                         </template>
                     </Dropdown>
