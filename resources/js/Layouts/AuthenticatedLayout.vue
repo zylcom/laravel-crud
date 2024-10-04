@@ -51,7 +51,7 @@ const unreadNotifications = computed(() => page.props.auth.notifications.filter(
                             <div class="flex w-screen max-w-sm flex-col gap-y-4 px-3 py-2">
                                 <div v-for="notification in $page.props.auth.notifications" :key="notification.id">
                                     <div class="whitespace-normal text-base font-normal">{{ notification.data.message }}</div>
-                                    <span class="text-xs font-medium text-blue-600 dark:text-blue-500">{{ notification.createdAgo }}</span>
+                                    <span class="text-xs font-medium text-blue-600 dark:text-blue-500">{{ notification.created_ago }}</span>
                                 </div>
                             </div>
                         </template>
@@ -59,10 +59,10 @@ const unreadNotifications = computed(() => page.props.auth.notifications.filter(
 
                     <Dropdown align="right">
                         <template #trigger>
-                            <button type="button" class="flex gap-x-2 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700">
+                            <button type="button" class="flex items-center gap-x-2 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700">
                                 {{ $page.props.auth.user.name }} {{ $page.props.auth.user.role === "admin" ? "(Admin)" : "" }}
 
-                                <ChevronDownIcon />
+                                <img class="h-10 w-10 rounded-full" :src="$page.props.auth.user.avatar" :alt="$page.props.auth.user.name" />
                             </button>
                         </template>
 

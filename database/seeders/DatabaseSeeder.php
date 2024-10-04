@@ -5,11 +5,16 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
+use App\Services\AvatarService;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    public function __construct(
+        public AvatarService $avatar
+    ) {}
+
     /**
      * Seed the application's database.
      */
@@ -22,6 +27,7 @@ class DatabaseSeeder extends Seeder
 
         $adminUser = User::factory()->hasProducts(4)->unverified()->admin()->create([
             'name' => 'Test Admin',
+            'avatar' => $this->avatar->generate('Test Admin'),
             'email' => 'admin@example.com',
         ]);
 
@@ -36,6 +42,7 @@ class DatabaseSeeder extends Seeder
 
         $user = User::factory()->hasProducts(4)->unverified()->create([
             'name' => 'Test User',
+            'avatar' => $this->avatar->generate('Test User'),
             'email' => 'test@example.com',
         ]);
 

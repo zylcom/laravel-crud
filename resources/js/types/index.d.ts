@@ -9,7 +9,7 @@ export type Notification = {
     type: string;
     data: NotificationData;
     read_at: string;
-    createdAgo: string;
+    created_ago: string;
     created_at: string;
     updated_at: string;
 };
@@ -17,6 +17,7 @@ export type Notification = {
 export interface User {
     id: number;
     name: string;
+    avatar: string;
     email: string;
     email_verified_at?: string;
     role: "admin" | "user";

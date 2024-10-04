@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\AvatarService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,6 +16,10 @@ use Inertia\Response;
 
 class RegisteredUserController extends Controller
 {
+    public function __construct(
+        public AvatarService $avatar
+    ) {}
+
     /**
      * Display the registration view.
      */
@@ -36,8 +41,11 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $avatar = $this->avatar->generate($request->name);
+
         $user = User::create([
             'name' => $request->name,
+            'avatar' => $avatar,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

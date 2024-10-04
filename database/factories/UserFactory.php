@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Services\AvatarService;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -23,8 +25,11 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $avatarService = App::make(AvatarService::class);
+
         return [
             'name' => fake()->name(),
+            'avatar' => $avatarService->generate(fake()->name()),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
