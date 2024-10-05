@@ -20,14 +20,14 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = [];
+        $products = collect([]);
 
         $response = Gate::inspect('viewAll', Product::class);
 
         if ($response->allowed()) {
-            $products = Product::with('category', 'user')->orderBy('id', 'asc')->get();
+            $products->push(...Product::with('category', 'user')->orderBy('id', 'asc')->get());
         } else {
-            $products = Product::with('category')->whereBelongsTo($request->user())->orderBy('id', 'asc')->get();
+            $products->push(...Product::with('category')->whereBelongsTo($request->user())->orderBy('id', 'asc')->get());
         }
 
         $categories = Category::all();

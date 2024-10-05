@@ -40,11 +40,7 @@ class HandleInertiaRequests extends Middleware
                         return [];
                     }
 
-                    $data = $request->user()->notifications->map(fn ($notification) => [
-                        ...$notification->toArray(),
-                        'created_ago' => $notification->created_at->diffForHumans(),
-                    ]
-                    );
+                    $data = $request->user()->notifications->addCreatedAgo();
 
                     return $data;
                 },
